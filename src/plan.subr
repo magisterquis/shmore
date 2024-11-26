@@ -1,0 +1,129 @@
+# plan.subr
+# Test plan
+# By J. Stuart McMurray
+# Created 20241105
+# Last Modified 20241112
+
+# TODO: Try checking for redefined functions?
+
+# TAP_TODO, if set, notes that tests are expected to fail.  Output will include
+# a flag indicating the tests are TODO for test harness bookkeeping.
+# Surrounding a group of tests in TAP_TODO=... / TAP_TODO= makes for a
+# practical TODO list; as each TODO test is done, move it outside the TAP_TODO
+# lines.
+TAP_TODO=$TAP_TODO
+
+# TAP_NOTRAP, if set to a non-empty string, causes tap_done_testing to not
+# be the EXIT trap.  This is handy for scripts which already use the EXIT trap
+# or for using shmore in functions inside a script.
+TAP_NOTRAP=$TAP_NOTRAP
+
+# Return values.
+TAP_RETURN_MAX_FAIL=240
+TAP_RETURN_INVALID_OPERATOR=241
+TAP_RETURN_NOT_ENOUGH_ARGUMENTS=242
+TAP_RETURN_PLAN_ALREADY_PRINTED=243
+TAP_RETURN_WRONG_TEST_COUNT=244
+TAP_RETURN_BAILED_OUT=255
+
+# This all works until we run multi-threaded.
+_tap_bailo=
+_tap_doner=
+_tap_nfail=0
+_tap_nplan=0
+_tap_ntest=0
+_tap_space=
+
+# tap_reset resets shmore's internal state to the same state as before any
+# tests are run.  It doesn't touch the EXIT trap, though.  This is useful for
+# running tests in functions, and not in a standalone script.
+tap_reset() {
+        TAP_TODO=
+        _tap_bailo=
+        _tap_doner=
+        _tap_nfail=0
+        _tap_nplan=0
+        _tap_ntest=0
+        _tap_space=
+}
+
+# tap_done_testing is used to note the end of testing.  It emits a plan if none
+# was set via tap_plan and emits information about the testing itself.
+# If tap_plan has already been called, tap_done_testing serves as a final,
+# redundant test to check if all the tests were run and can be used instead of
+# tap_plan if the number of tests isn't known ahead of time.  It does
+# significantly less than Test::More::done_testing but is somewhat gentler.
+#
+# The number of failed tests is returned unless an error is encountered, in
+# which case one of the TAP_RETURN_* constants is returned instead.  This may
+# be a problem with set -e.  Use ||: to get around this.
+#
+# tap_done_testing will be registered as the EXIT trap action unless
+# $TAP_NOTRAP is a non-empty string.
+#
+# No arguments.
+tap_done_testing() {
+        # Nothing to do here if we bailed.
+        if [ -n "${_tap_bailo}" ]; then
+                return $TAP_RETURN_BAILED_OUT
+        fi
+
+        # Idempotency
+        if [ -n "${_tap_doner}" ]; then
+                return ${_tap_doner}
+        fi
+
+        # Default exit status is the number of failed tests, capped at 250.
+        _tap_doner=${_tap_nfail}
+        if [ "$TAP_RETURN_MAX_FAIL" -lt "${_tap_doner}" ]; then
+                _tap_doner=$TAP_RETURN_MAX_FAIL
+        fi
+        # If we didn't make a plan, assume we ran as many tests as we
+        # should have.
+        if [ 0 -eq ${_tap_nplan} ] && [ 0 -ne ${_tap_ntest} ]; then
+                tap_plan ${_tap_ntest}
+        fi
+        # Make sure we ran the right amount of tests.
+        if [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
+                tap_is "${_tap_ntest}" "${_tap_nplan}" \
+                        "planned to run ${_tap_nplan} but \
+actually ran ${_tap_ntest}"
+                _tap_doner=${_tap_nfail}
+        fi
+        # Note if we failed tests.
+        if [ 0 -ne ${_tap_nfail} ]; then
+                tap_diag "Looks like you failed ${_tap_nfail} tests \
+of ${_tap_ntest}." >&2
+        fi
+        return ${_tap_doner}
+}
+if [ -z "$TAP_NOTRAP" ]; then
+        trap tap_done_testing EXIT
+fi
+
+# tap_plan prints the number of tests we expect
+#
+# Arguments:
+# $1 - The number of tests which should be run
+tap_plan() {
+        # Don't do anything if we've bailed.
+        if [ -n "${_tap_bailo}" ]; then
+                return
+        fi
+
+        # Need a count
+        if [ 0 -eq $# ]; then
+                echo "Not enough arguments" >&2
+                return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
+        fi
+        # Don't double-call
+        if [ 0 -ne "${_tap_nplan}" ]; then
+                echo "Plan already printed" >&2
+                return $TAP_RETURN_PLAN_ALREADY_PRINTED
+        fi
+        # Work out how many tests we're signing ourselves up for
+        _tap_nplan=$(($1))
+        _tap_echo "1..${_tap_nplan}"
+}
+
+# vim: ft=sh

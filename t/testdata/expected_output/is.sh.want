@@ -1,0 +1,15 @@
+ok 1
+not ok 2
+#          got: 'foo'
+#     expected: 'bar'
+not ok 3 - Simple is
+#   Failed test 'Simple is'
+#          got: 'foo'
+#     expected: 'bar'
+not ok 4 - Simple is with file and line
+#   Failed test 'Simple is with file and line'
+#   at t/testdata/expected_output/is.sh line 16.
+#          got: 'foo'
+#     expected: 'bar'
+1..4
+# Looks like you failed 3 tests of 4.

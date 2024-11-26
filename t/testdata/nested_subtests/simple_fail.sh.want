@@ -1,0 +1,13 @@
+# Subtest: Simple Subtest
+    # Subtest: Simple Subsubtest
+        not ok 1
+        1..1
+        # Looks like you failed 1 tests of 1.
+    not ok 1 - Simple Subsubtest
+    #   Failed test 'Simple Subsubtest'
+    1..1
+    # Looks like you failed 1 tests of 1.
+not ok 1 - Simple Subtest
+#   Failed test 'Simple Subtest'
+1..1
+# Looks like you failed 1 tests of 1.

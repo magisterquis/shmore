@@ -1,0 +1,16 @@
+ok 1 - Like Match
+not ok 2 - Like Not Match
+#   Failed test 'Like Not Match'
+#                   'def'
+#     doesn't match '(?^:ab?c)'
+not ok 3 - Like Bad Regex
+#   Failed test 'Like Bad Regex'
+#     'a)bc' doesn't look much like a regex to me.
+#     Unmatched ) in regex; marked by <-- HERE in m/a) <-- HERE bc/ at -e line 1.
+not ok 4 - Unlike Fail
+#   Failed test 'Unlike Fail'
+#                   'abc'
+#           matches '(?^:ab?c)'
+ok 5 - Unlike Succeed
+1..5
+# Looks like you failed 3 tests of 5.

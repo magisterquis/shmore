@@ -1,0 +1,28 @@
+ok 1 - Pass - =
+not ok 2 - Fail - =
+#   Failed test 'Fail - ='
+#          got: 'a'
+#     expected: 'b'
+ok 3 - Pass - !=
+not ok 4 - Fail - !=
+#   Failed test 'Fail - !='
+#          got: 'a'
+#     expected: anything else
+ok 5 - Pass - -eq
+not ok 6 - Fail - -eq
+#   Failed test 'Fail - -eq'
+#          got: '1'
+#     expected: '2'
+ok 7 - Pass - -ne
+not ok 8 - Fail - -ne
+#   Failed test 'Fail - -ne'
+#          got: '1'
+#     expected: anything else
+ok 9 - Pass - -lt
+not ok 10 - Fail - -lt
+#   Failed test 'Fail - -lt'
+#     '1'
+#         -lt
+#     '1'
+1..10
+# Looks like you failed 5 tests of 10.

@@ -1,0 +1,65 @@
+ok 1
+not ok 2 - Unequal strings
+#   Failed test 'Unequal strings'
+#   at .
+#          got: 'abc'
+#     expected: 'def'
+not ok 3 - Unordered numbers
+#   Failed test 'Unordered numbers'
+#   at .
+#     '1'
+#         -gt
+#     '2'
+ok 4 - Ordered numbers
+not ok 5 - Equal numbers
+#   Failed test 'Equal numbers'
+#          got: '1'
+#     expected: anything else
+# Subtest: Test Subtest
+    ok 1
+    not ok 2 - Subtest Unequal strings
+    #   Failed test 'Subtest Unequal strings'
+    #   at .
+    #          got: 'abc'
+    #     expected: 'def'
+    not ok 3 - Subtest Unordered numbers
+    #   Failed test 'Subtest Unordered numbers'
+    #   at .
+    #     '1'
+    #         -gt
+    #     '2'
+    ok 4 - Subtest Ordered numbers
+    not ok 5 - Subtest Equal numbers
+    #   Failed test 'Subtest Equal numbers'
+    #          got: '1'
+    #     expected: anything else
+    # Subtest: Test Subsubtest
+        ok 1
+        not ok 2 - Subsubtest Unequal strings
+        #   Failed test 'Subsubtest Unequal strings'
+        #   at .
+        #          got: 'abc'
+        #     expected: 'def'
+        not ok 3 - Subsubtest Unordered numbers
+        #   Failed test 'Subsubtest Unordered numbers'
+        #   at .
+        #     '1'
+        #         -gt
+        #     '2'
+        ok 4 - Subsubtest Ordered numbers
+        not ok 5 - Subsubtest Equal numbers
+        #   Failed test 'Subsubtest Equal numbers'
+        #          got: '1'
+        #     expected: anything else
+        1..5
+        # Looks like you failed 3 tests of 5.
+    not ok 6 - Test Subsubtest
+    #   Failed test 'Test Subsubtest'
+    #   at .
+    1..6
+    # Looks like you failed 4 tests of 6.
+not ok 6 - Test Subtest
+#   Failed test 'Test Subtest'
+#   at .
+1..6
+# Looks like you failed 4 tests of 6.

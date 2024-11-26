@@ -1,0 +1,9 @@
+not ok 1 - Output location # TODO Checking output
+#   Failed (TODO) test 'Output location'
+#          got: 'kittens'
+#     expected: 'moose'
+ok 2 # skip A skip
+ok 3 # skip A skip
+not ok 4 # TODO & SKIP A todo plus a skip
+not ok 5 # TODO & SKIP A todo plus a skip
+1..5

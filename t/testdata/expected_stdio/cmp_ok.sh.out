@@ -1,0 +1,7 @@
+ok 1 - Pass - -eq
+not ok 2 - Fail - -eq
+ok 3 - Pass - -ne
+not ok 4 - Fail - -ne
+ok 5 - Pass - -lt
+not ok 6 - Fail - -lt
+1..6

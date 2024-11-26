@@ -1,0 +1,101 @@
+# ok.subr
+# Just test for success
+# By J. Stuart McMurray
+# Created 20241105
+# Last Modified 20241126
+
+# tap_ok notes whether a test succeeded or failed.
+#
+# Arguments:
+# $1 - 0 for success
+# $2 - Test name (optional)
+# $3 - Test file (optional)
+# $4 - Test line (optional)
+tap_ok() { _tap_ok "$1" "$2" "$3" "$4"; }
+
+# tap_pass is a wrapper around tap_ok 0.  The file and line are unused, but
+# left for symmetry with tap_fail.
+#
+# Arguments:
+# $1 - Test name (optional)
+# $2 - Test file (optional)
+# $3 - Test line (optional)
+tap_pass() { tap_ok 0 "$@"; }
+
+# tap_fail is a wrapper around tap_ok 0
+#
+# Arguments:
+# $1 - Test name (optional)
+# $2 - Test file (optional)
+# $3 - Test line (optional)
+tap_fail() { tap_ok 1 "$@"; }
+
+# _tap_ok does what tap_ok says it does, but takes an additional argument to
+# specify the separator character.  This is for skips and testing and such.
+#
+# Environment:
+#
+# _TAP_OK_SEPARATOR   - Separator after number (optional, default -)
+# _TAP_OK_NONOTOKDIAG - Non-empty to not print message after not ok...
+#
+# Arguments:
+# $1 - 0 for success
+# $2 - Test name (optional)
+# $3 - Test file (optional)
+# $4 - Test line (optional)
+_tap_ok() {
+        # Don't do anything if we've bailed.
+        if [ -n "${_tap_bailo}" ]; then
+                return
+        fi
+
+        # Need at least an ok or not.
+        if [ 1 -gt $# ]; then
+                echo "Not enough arguments" >&2
+                return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
+        fi
+
+        # Bookkeeping
+        : $((_tap_ntest+=1)) # dash doesn't ++, turns out.
+        if [ 0 -ne $1 ] && [ -z "$TAP_TODO" ]; then
+                : $((_tap_nfail+=1))
+        fi
+        # roll the (not) ok line
+        _tap_msg=
+        if [ 0 -ne "$1" ]; then
+                _tap_msg="not "
+        fi
+        _tap_msg="${_tap_msg}ok ${_tap_ntest}"
+        if [ -n "$2" ]; then
+                if [ -z "${_TAP_OK_SEPARATOR}" ]; then
+                        _tap_msg="${_tap_msg} -"
+                else
+                        _tap_msg="${_tap_msg} ${_TAP_OK_SEPARATOR}"
+                fi
+                _tap_msg="${_tap_msg} $2"
+        fi
+        if [ -n "$TAP_TODO" ]; then
+                _tap_msg="${_tap_msg} # TODO $TAP_TODO"
+        fi
+        _tap_echo "${_tap_msg}"
+        # If we succeeded or aren't printing a message, we're done
+        if [ 0 -eq "$1" ] || [ -n "${_TAP_OK_NONOTOKDIAG}" ]; then
+                return
+        fi
+        # We failed, add details if we can.  Also switch to stdout if we've got
+        # a TODO.
+        _tap_msg=
+        _tap_pf=tap_diag
+        if [ -n "$TAP_TODO" ]; then
+                _tap_msg=" (TODO)"
+                _tap_pf=tap_note
+        fi
+        if [ -n "$2" ]; then
+                ${_tap_pf} "  Failed${_tap_msg} test '$2'"
+        fi
+        if [ -n "$3" ]; then
+                ${_tap_pf} "  at $3 line ${4:-"???"}."
+        fi
+}
+
+# vim: ft=sh

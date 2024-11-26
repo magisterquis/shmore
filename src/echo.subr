@@ -1,0 +1,31 @@
+# echo.subr
+# Print helpful messages
+# By J. Stuart McMurray
+# Created 20241109
+# Last Modified 20241112
+
+# _tap_echo is like echo, but prepends ${_tap_space} to the message, for
+# easier subtests.
+_tap_echo() { echo "${_tap_space}$*"; }
+
+# tap_diag prints a diagnostic message similar to echo but will not interfere
+# with test output.  Similar to echo, arguments are joined with spaces.  Output
+# is sent to stderr.
+tap_diag() { tap_note "$@" >&2; }
+
+# Like tap_diag, but by default the message will not be seen when the test is
+# run in a harness.  Output is sent to stdout.
+tap_note() {(
+        # If we've got no real arguments, emit nothing
+        if [ -z "$*" ]; then
+                return
+        fi
+        # Print each line.
+        IFS='
+'
+        for line in $(echo "$*"); do # echo because zsh, apparently.
+                _tap_echo "# $line"
+        done
+)}
+
+# vim: ft=sh

@@ -1,0 +1,54 @@
+# subtest.subr
+# Test plan
+# By J. Stuart McMurray
+# Created 20241105
+# Last Modified 20241112
+
+# tap_subtest runs a subtest, which should noramlly be its own function
+# wrapping i.e. mysubtest() {( tap_... )}; tap_subtest "foo" mysubtest.
+# The subtest function should return 0 on success.
+# See examples/subtest.sh for an example.
+#
+# $1 - Subtest name for TAP output
+# $2 - Subtest function name
+# $3 - Test file (optional)
+# $4 - Test line (optional)
+tap_subtest() {
+        # Don't do anything if we've bailed.
+        if [ -n "${_tap_bailo}" ]; then
+                return
+        fi
+
+        # Make sure we have at least a test and a name.
+        if [ 2 -gt $# ]; then
+                echo "Need a subtest and a test name" >&2
+                return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
+        fi
+
+        # Note we're running a subtest
+        tap_note "Subtest: $1"
+
+        # Run the subtest with extra spaces
+        _tap_ret=0
+        (
+                trap tap_done_testing EXIT
+                _tap_save_space=${_tap_space}
+                tap_reset
+                _tap_space="    ${_tap_save_space}"
+                _tap_save_space=
+                "$2"
+                tap_done_testing
+        ) || _tap_ret=$?
+
+        # If we've bailed, note it for the rest of testing.  There's no really
+        # good way to pass things back from subshells.
+        if [ $TAP_RETURN_BAILED_OUT -eq ${_tap_ret} ]; then
+                _tap_bailo="Bailed in subtest $2"
+                return
+        fi
+
+        # Emit the ok/not ok message and note success/fail.
+        tap_ok "${_tap_ret}" "$1" "$3" "$4"
+}
+
+# vim: ft=sh

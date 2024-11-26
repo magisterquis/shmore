@@ -1,0 +1,11 @@
+ok 1 - Before TODO block - pass
+not ok 2 - Before TODO block - fail
+#   Failed test 'Before TODO block - fail'
+ok 3 - A pass # TODO Do this eventually
+not ok 4 - A fail # TODO Do this eventually
+#   Failed (TODO) test 'A fail'
+ok 5 - After TODO block - pass
+not ok 6 - After TODO block - fail
+#   Failed test 'After TODO block - fail'
+1..6
+# Looks like you failed 2 tests of 6.
