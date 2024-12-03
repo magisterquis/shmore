@@ -1,8 +1,11 @@
 # shmore.subr
 # Shell knockoff of Test::More
 # By J. Stuart McMurray
-# Created 20241126
-# Last Modified 20241126
+# Created 20241109
+# Last Modified 20241203
+
+# Shmore's source repository is
+# https://github.com/magisterquis/shmore
 
 # _tap_echo is like echo, but prepends ${_tap_space} to the message, for
 # easier subtests.
