@@ -4,7 +4,7 @@
 # Example with the importantest bits
 # By J. Stuart McMurray
 # Created 20251126
-# Last Modified 20251126
+# Last Modified 20251203
 
 # Terminate on error.  Not required, but helpful.
 set -e
@@ -12,8 +12,9 @@ set -e
 # Source shmore.
 . ./shmore.subr
 
-# Note how many tests will be run.  Not strictly necessary but prevents missing
-# or extra tests as well as makes prove a bit less boring to watch.
+# Note how many tests will be run.  This isn't strictly necessary but gives us
+# a warning if we inadvertently add or remove a test.  It also makes prove a
+# bit less boring to watch.
 tap_plan 3
 
 # Simplest test is to make sure a previous command worked.

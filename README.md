@@ -1,7 +1,8 @@
 Shell [TAP](https://testanything.org) Producer 
 ==============================================
-[TAP](https://testanything.org)-producing testing library.  More or less a
-Shell knockoff of Perl's [Test::More](https://perldoc.perl.org/Test::More),
+Little shell library for [testing anything].
+More or less a Shell knockoff of Perl's
+[Test::More](https://perldoc.perl.org/Test::More),
 usable with [Prove](https://perldoc.perl.org/prove).
 
 Just copy [`shmore.subr`](./shmore.subr) somewhere and source it.
@@ -22,8 +23,9 @@ This test script
 # Source shmore.
 . ./shmore.subr
 
-# Note how many tests will be run.  Not strictly necessary but prevents missing
-# or extra tests as well as makes prove a bit less boring to watch.
+# Note how many tests will be run.  This isn't strictly necessary but gives us
+# a warning if we inadvertently add or remove a test.  It also makes prove a
+# bit less boring to watch.
 tap_plan 3
 
 # Simplest test is to make sure a previous command worked.
