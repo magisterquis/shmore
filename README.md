@@ -1,6 +1,6 @@
 Shell [TAP](https://testanything.org) Producer 
 ==============================================
-Little shell library for [testing anything].
+Little shell library for [testing anything](https://testanything.org).
 More or less a Shell knockoff of Perl's
 [Test::More](https://perldoc.perl.org/Test::More),
 usable with [Prove](https://perldoc.perl.org/prove).
