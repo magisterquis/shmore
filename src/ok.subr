@@ -50,7 +50,7 @@ _tap_ok() {
         fi
 
         # Need at least an ok or not.
-        if [ 1 -gt $# ]; then
+        if [ 1 -gt $# ] || [ -z "$1" ] ; then
                 echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
