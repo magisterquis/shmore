@@ -5,7 +5,9 @@ More or less a Shell knockoff of Perl's
 [Test::More](https://perldoc.perl.org/Test::More),
 usable with [Prove](https://perldoc.perl.org/prove).
 
-Just copy [`shmore.subr`](./shmore.subr) somewhere and source it.
+Just copy [`shmore.subr`](./shmore.subr)
+([raw](https://raw.githubusercontent.com/magisterquis/shmore/refs/heads/master/shmore.subr))
+somewhere and source it.
 
 Tested with `bash`, `dash`, `ksh`, `sh`, and `zsh` on OpenBSD and macOS.  It
 should work elsewhere as well.
