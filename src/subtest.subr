@@ -37,7 +37,8 @@ tap_subtest() {
                 _tap_space="    ${_tap_save_space}"
                 _tap_save_space=
                 "$2"
-                tap_done_testing
+                RET=$?
+                tap_done_testing && exit "$RET"
         ) || _tap_ret=$?
 
         # If we've bailed, note it for the rest of testing.  There's no really

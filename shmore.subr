@@ -197,7 +197,7 @@ tap_BAIL_OUT() {
                 _tap_bailo="${_tap_bailo}  $*"
         fi
         echo "${_tap_bailo}"
-        return $TAP_RETURN_BAIL_OUT
+        return $TAP_RETURN_BAILED_OUT
 }
 
 # tap_skip is equivalent to a number of tap_ok 0's, plus some TAP which notes
@@ -248,8 +248,6 @@ _tap_skip() {
         TAP_TODO=${_tap_todo_orig}
         _TAP_OK_SEPARATOR=${_tap_ok_separator_orig}
 }
-
-# TODO: Try checking for redefined functions?
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -404,7 +402,8 @@ tap_subtest() {
                 _tap_space="    ${_tap_save_space}"
                 _tap_save_space=
                 "$2"
-                tap_done_testing
+                RET=$?
+                tap_done_testing && exit "$RET"
         ) || _tap_ret=$?
 
         # If we've bailed, note it for the rest of testing.  There's no really

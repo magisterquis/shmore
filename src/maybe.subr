@@ -1,4 +1,4 @@
-r maybe.subr
+# maybe.subr
 # Maybe don't run tests, or maybe run them differently
 # By J. Stuart McMurray
 # Created 20241112
@@ -18,7 +18,7 @@ tap_BAIL_OUT() {
                 _tap_bailo="${_tap_bailo}  $*"
         fi
         echo "${_tap_bailo}"
-        return $TAP_RETURN_BAIL_OUT
+        return $TAP_RETURN_BAILED_OUT
 }
 
 # tap_skip is equivalent to a number of tap_ok 0's, plus some TAP which notes
