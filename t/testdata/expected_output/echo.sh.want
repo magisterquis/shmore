@@ -1,0 +1,12 @@
+1..1
+# Before diag star-slash
+# */
+# Before note star-slash
+# */
+# Diag with multiple arguments
+# Note with multiple arguments
+# Diag with
+# multiple lines and multiple arguments
+# Note with
+# multiple lines and multiple arguments
+ok 1

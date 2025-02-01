@@ -4,7 +4,7 @@
 # Test diag and note
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241109
+# Last Modified 20250201
 
 set -e
 
@@ -40,3 +40,9 @@ tap_diag "Diag after empty"
 tap_note "Note before empty"
 tap_note
 tap_note "Note after empty"
+
+# Make sure we don't expand wildcards.
+tap_diag "Diag before star-slash"
+tap_diag "*/"
+tap_note "Note before star-slash"
+tap_note "*/"

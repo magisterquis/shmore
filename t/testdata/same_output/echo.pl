@@ -5,7 +5,7 @@
 # Test the simplest test function
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241109
+# Last Modified 20250201
 
 use warnings;
 use strict;
@@ -35,5 +35,11 @@ diag "Diag after empty";
 note "Note before empty";
 note;
 note "Note after empty";
+
+# Make sure we don't expand wildcards.
+diag "Diag before star-slash";
+diag "*/";
+note "Note before star-slash";
+note "*/";
 
 done_testing;

@@ -2,7 +2,7 @@
 # Print helpful messages
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241112
+# Last Modified 20250201
 
 # _tap_echo is like echo, but prepends ${_tap_space} to the message, for
 # easier subtests.
@@ -21,11 +21,14 @@ tap_note() {(
                 return
         fi
         # Print each line.
-        IFS='
+        (
+        set -f # This is silly, but prevents wildcard expansion
+        export IFS='
 '
-        for line in $(echo "$*"); do # echo because zsh, apparently.
+        for line in $(echo "$@"); do
                 _tap_echo "# $line"
         done
+        )
 )}
 
 # vim: ft=sh
