@@ -2,10 +2,10 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20241112
+# Last Modified 20250201
 
-# tap_subtest runs a subtest, which should noramlly be its own function
-# wrapping i.e. mysubtest() {( tap_... )}; tap_subtest "foo" mysubtest.
+# tap_subtest runs a subtest, which should normally be its own function
+# i.e. mysubtest() {( tap_... )}; tap_subtest "foo" mysubtest.
 # The subtest function should return 0 on success.
 # See examples/subtest.sh for an example.
 #

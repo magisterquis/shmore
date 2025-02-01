@@ -2,7 +2,7 @@
 # Shell knockoff of Test::More
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241203
+# Last Modified 20250201
 
 # Shmore's source repository is
 # https://github.com/magisterquis/shmore
@@ -368,8 +368,8 @@ tap_plan() {
         _tap_echo "1..${_tap_nplan}"
 }
 
-# tap_subtest runs a subtest, which should noramlly be its own function
-# wrapping i.e. mysubtest() {( tap_... )}; tap_subtest "foo" mysubtest.
+# tap_subtest runs a subtest, which should normally be its own function
+# i.e. mysubtest() {( tap_... )}; tap_subtest "foo" mysubtest.
 # The subtest function should return 0 on success.
 # See examples/subtest.sh for an example.
 #
