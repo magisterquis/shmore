@@ -2,7 +2,7 @@
 # Shell knockoff of Test::More
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250201
+# Last Modified 20250202
 
 # Shmore's source repository is
 # https://github.com/magisterquis/shmore
@@ -408,7 +408,9 @@ tap_subtest() {
 
         # If we've bailed, note it for the rest of testing.  There's no really
         # good way to pass things back from subshells.
-        if [ $TAP_RETURN_BAILED_OUT -eq ${_tap_ret} ]; then
+        if [ -z "$_tap_bailo" ] && \
+                [ $TAP_RETURN_BAILED_OUT -eq ${_tap_ret} ]; then
+
                 _tap_bailo="Bailed in subtest $2"
                 return
         fi
