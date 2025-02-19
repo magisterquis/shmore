@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 #
-# line_numbers.pl
+# line_numbers.t
 # Make sure the README has the right line numbers
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20241126
+# Last Modified 20250218
 
 use warnings;
 use strict;
