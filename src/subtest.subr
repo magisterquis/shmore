@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250202
+# Last Modified 20250218
 
 # tap_subtest runs a subtest, which should normally be its own function
 # i.e. mysubtest() { tap_... }; tap_subtest "foo" mysubtest.
@@ -38,6 +38,12 @@ tap_subtest() {
                 _tap_save_space=
                 "$2"
                 RET=$?
+                # If we didn't run any tests at all let someone know.
+                if [ 0 -eq ${_tap_ntest} ] && [ -z "${_tap_bailo}" ]; then
+                        _tap_echo "1..0"
+                        tap_diag "No tests run!"
+                        RET=$TAP_RETURN_NO_SUBTESTS_RUN
+                fi
                 tap_done_testing && exit "$RET"
         ) || _tap_ret=$?
 
@@ -48,7 +54,12 @@ tap_subtest() {
 
                 _tap_bailo="Bailed in subtest $2"
                 return
+        # If we didn't get any subtests, note it as an error.
+        elif [ $TAP_RETURN_NO_SUBTESTS_RUN -eq ${_tap_ret} ]; then
+                tap_ok 1 "No tests run for subtest "'"'"$1"'"' "$3" "$4"
+                return
         fi
+
 
         # Emit the ok/not ok message and note success/fail.
         tap_ok "${_tap_ret}" "$1" "$3" "$4"

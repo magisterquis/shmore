@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250202
+# Last Modified 20250218
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -22,6 +22,7 @@ TAP_RETURN_INVALID_OPERATOR=241
 TAP_RETURN_NOT_ENOUGH_ARGUMENTS=242
 TAP_RETURN_PLAN_ALREADY_PRINTED=243
 TAP_RETURN_WRONG_TEST_COUNT=244
+TAP_RETURN_NO_SUBTESTS_RUN=245
 TAP_RETURN_BAILED_OUT=255
 
 # This all works until we run multi-threaded.
@@ -90,13 +91,19 @@ actually ran ${_tap_ntest}"
         fi
         # Note if we failed tests.
         if [ 0 -ne ${_tap_nfail} ]; then
-                tap_diag "Looks like you failed ${_tap_nfail} tests \
+                _tap_s=tests
+                if [ 1 -eq ${_tap_nfail} ]; then
+                        _tap_s=test
+                fi
+                tap_diag "Looks like you failed ${_tap_nfail} ${_tap_s} \
 of ${_tap_ntest}." >&2
         fi
         return ${_tap_doner}
 }
 if [ -z "$TAP_NOTRAP" ]; then
-        trap tap_done_testing EXIT
+        # Apparently zsh doesn't use the last exit status as its exit status
+        # like EVERY OTHER SHELL.
+        trap 'set +e; tap_done_testing; exit $?' EXIT
 fi
 
 # tap_plan prints the number of tests we expect
