@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250218
+# Last Modified 20250220
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -62,6 +62,11 @@ tap_reset() {
 #
 # No arguments.
 tap_done_testing() {
+        # Grab the original exit status.  If this isn't 0, we'll return it
+        # if we would have otherwise had a successful exit for in case
+        # we trapped a syntax error or something along those lines.
+        _tap_oret=$?
+
         # Nothing to do here if we bailed.
         if [ -n "${_tap_bailo}" ]; then
                 return $TAP_RETURN_BAILED_OUT
@@ -98,12 +103,27 @@ actually ran ${_tap_ntest}"
                 tap_diag "Looks like you failed ${_tap_nfail} ${_tap_s} \
 of ${_tap_ntest}." >&2
         fi
+
+        # If all went well in TAP-land, we'll use the shell's exit status in
+        # case there was a syntax error or something equally unhappy and the
+        # shell told us about it.
+        if [ 0 -eq ${_tap_doner} ]; then
+                _tap_doner=${_tap_oret}
+        fi
+
+        # If we're still all happy, don't specify a return value.  Some shells
+        # use this to preserve the EXIT trap's return code, especially when
+        # $? wasn't set at the top of the function.
+        if [ 0 -eq ${_tap_doner} ]; then
+                return
+        fi
+
         return ${_tap_doner}
 }
 if [ -z "$TAP_NOTRAP" ]; then
         # Apparently zsh doesn't use the last exit status as its exit status
-        # like EVERY OTHER SHELL.
-        trap 'set +e; tap_done_testing; exit $?' EXIT
+        # like EVERY OTHER SHELL.  Turns out ksh93 is just as bad.
+        trap 'tap_done_testing || exit $?' EXIT
 fi
 
 # tap_plan prints the number of tests we expect
