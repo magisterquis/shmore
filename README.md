@@ -102,9 +102,9 @@ Name                                      | Description                         
 [`tap_todo_skip`](./src/maybe.subr#L42)   | Equivalent to a number of `tap_ok 1`s which also note the tests are TODO       | A Reason          | How many TODO tests will be skipped 
 [`tap_diag`](./src/echo.subr#L14)         | Print a diagnostic message to stderr                                           | The Message; arguments will be joined with `"$*"`
 [`tap_note`](./src/echo.subr#L18)         | Print a diagsontic message not seen when using a test harness                  | The Message; arguments will be joined with `"$*"`
-[`tap_plan`](./src/plan.subr#L106)        | Note and print the number of tests to run                                      | The number of tests expected to run
-[`tap_done_testing`](./src/plan.subr#L63) | Emit a plan if `tap_plan` wasn't called or check if the correct number of tests were run if so
-[`tap_reset`](./src/plan.subr#L38)        | Reset Shmore's internal state
+[`tap_plan`](./src/plan.subr#L113)        | Note and print the number of tests to run                                      | The number of tests expected to run
+[`tap_done_testing`](./src/plan.subr#L64) | Emit a plan if `tap_plan` wasn't called or check if the correct number of tests were run if so
+[`tap_reset`](./src/plan.subr#L39)        | Reset Shmore's internal state
 [`tap_BAIL_OUT`](./src/maybe.subr#L15)    | Stops all testing                                                              | _A Reason; arguments will be joined with `"$*"`_
 
 Many functions take an optional file and line number.  This is usually done
