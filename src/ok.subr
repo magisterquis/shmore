@@ -2,7 +2,7 @@
 # Just test for success
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20241126
+# Last Modified 20250218
 
 # tap_ok notes whether a test succeeded or failed.
 #
@@ -89,12 +89,21 @@ _tap_ok() {
         if [ -n "$TAP_TODO" ]; then
                 _tap_msg=" (TODO)"
                 _tap_pf=tap_note
+        elif [ -n "$HARNESS_ACTIVE" ]; then
+                # If we're in a harness and not TODOing, we put a blank line
+                # above fails, apparently.
+                echo >&2 # Just a newline
         fi
+
+        # Whether we use one line or two depends on whether or not we have a
+        # test name.
+        _tap_l1="Failed${_tap_msg} test"
+        _tap_l2="at ${3:-"???"} line ${4:-"???"}."
         if [ -n "$2" ]; then
-                ${_tap_pf} "  Failed${_tap_msg} test '$2'"
-        fi
-        if [ -n "$3" ]; then
-                ${_tap_pf} "  at $3 line ${4:-"???"}."
+                ${_tap_pf} "  ${_tap_l1} '$2'"
+                ${_tap_pf} "  ${_tap_l2}"
+        else
+                ${_tap_pf} "  ${_tap_l1} ${_tap_l2}"
         fi
 }
 
