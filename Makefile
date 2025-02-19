@@ -2,7 +2,7 @@
 # Test shmore
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20241109
+# Last Modified 20250218
 
 all: shmore.subr test
 
@@ -14,6 +14,7 @@ shmore.subr: src/readsrc.awk src/*.subr src/header.m4
 	mv $@.tmp $@
 
 test: shmore.subr
-	prove -It t/ examples/
+	prove -It examples/
+	prove -It --directives t/
 
 .PHONY: test
