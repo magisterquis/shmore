@@ -1,14 +1,20 @@
 ok 1 - Like Match
 not ok 2 - Like Not Match
+
 #   Failed test 'Like Not Match'
+#   at ??? line ???.
 #                   'def'
 #     doesn't match '(?^:ab?c)'
 not ok 3 - Like Bad Regex
+
 #   Failed test 'Like Bad Regex'
+#   at ??? line ???.
 #     'a)bc' doesn't look much like a regex to me.
 #     Unmatched ) in regex; marked by <-- HERE in m/a) <-- HERE bc/ at -e line 1.
 not ok 4 - Unlike Fail
+
 #   Failed test 'Unlike Fail'
+#   at ??? line ???.
 #                   'abc'
 #           matches '(?^:ab?c)'
 ok 5 - Unlike Succeed

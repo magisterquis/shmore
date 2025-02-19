@@ -10,6 +10,7 @@ set -e
 
 . ./shmore.subr
 
+
 tap_pass
 tap_cmp_ok "abc" "=" "def" "Unequal strings" "$0" "$LINENO"
 tap_cmp_ok 1 "-gt" 2 "Unordered numbers" "$0" "$LINENO"
@@ -21,7 +22,7 @@ subtest() {
         tap_cmp_ok "abc" "=" "def" "Subtest Unequal strings" "$0" "$LINENO"
         tap_cmp_ok 1 "-gt" 2 "Subtest Unordered numbers" "$0" "$LINENO"
         tap_cmp_ok 1 "-le" 1 "Subtest Ordered numbers" "$0" "$LINENO"
-        tap_cmp_ok 1 "-ne" 1 "Subtest Equal numbers"
+        tap_cmp_ok 1 "-ne" 1 "Subtest Equal numbers" "$0"
 
         subtest() {
                 tap_pass

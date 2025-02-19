@@ -2,23 +2,33 @@
 ok 1
 ok 2 - Simple ok
 not ok 3
+
+#   Failed test at ??? line ???.
 not ok 4 - Simple fail
+
 #   Failed test 'Simple fail'
+#   at ??? line ???.
 not ok 5 - Simple fail with file
+
 #   Failed test 'Simple fail with file'
 #   at t/testdata/expected_output/ok.sh line ???.
 not ok 6 - Simple fail with file and line
+
 #   Failed test 'Simple fail with file and line'
 #   at t/testdata/expected_output/ok.sh line 20.
 ok 7 - Simple pass
 ok 8 - Simple pass with file
 ok 9 - Simple pass with file and line
 not ok 10 - Simple fail
+
 #   Failed test 'Simple fail'
+#   at ??? line ???.
 not ok 11 - Simple fail with file
+
 #   Failed test 'Simple fail with file'
 #   at t/testdata/expected_output/ok.sh line ???.
 not ok 12 - Simple fail with file and line
+
 #   Failed test 'Simple fail with file and line'
 #   at t/testdata/expected_output/ok.sh line 26.
 # Looks like you failed 7 tests of 12.

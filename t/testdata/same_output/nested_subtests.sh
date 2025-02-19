@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# subtest.sh
+# nested_subtests.sh
 # Test subtests
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241109
+# Last Modified 20250218
 
 set -e
 
@@ -31,6 +31,6 @@ tap_subtest "Test Subtest" "subtest" "$0" "$LINENO"
 tap_ok 0 "After Pass" "$0" "$LINENO"
 tap_ok 1 "After Fail" "$0" "$LINENO"
 
-tap_done_testing;
+tap_done_testing
 
 :

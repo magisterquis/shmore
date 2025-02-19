@@ -2,7 +2,9 @@
 ok 1
 ok 2
 not ok 3 - planned to run 3 but actually ran 2
+
 #   Failed test 'planned to run 3 but actually ran 2'
+#   at ??? line ???.
 #          got: '2'
 #     expected: '3'
-# Looks like you failed 1 tests of 3.
+# Looks like you failed 1 test of 3.

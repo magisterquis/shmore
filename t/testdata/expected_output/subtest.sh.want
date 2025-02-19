@@ -4,12 +4,18 @@
     ok 1 - A pass
     ok 2 - Another pass
     not ok 3 - A fail
+
     #   Failed test 'A fail'
+    #   at ??? line ???.
     not ok 4 - planned to run 4 but actually ran 3
+
     #   Failed test 'planned to run 4 but actually ran 3'
+    #   at ??? line ???.
     #          got: '3'
     #     expected: '4'
     # Looks like you failed 2 tests of 4.
 not ok 1 - A subtest without enough tests
+
 #   Failed test 'A subtest without enough tests'
-# Looks like you failed 1 tests of 1.
+#   at ??? line ???.
+# Looks like you failed 1 test of 1.

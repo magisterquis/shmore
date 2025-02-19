@@ -11,9 +11,5 @@ set -e
 . ./shmore.subr
 
 tap_pass
-subtest() {
-        tap_BAIL_OUT Test test test
-}
-tap_subtest "Bailing Subtest" subtest
+tap_BAIL_OUT Test test test
 tap_pass
-tap_done_testing

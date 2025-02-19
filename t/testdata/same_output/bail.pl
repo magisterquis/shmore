@@ -12,8 +12,6 @@ use strict;
 use Test::More;
 
 pass;
-subtest "Bailing Subtest" => sub {
-        BAIL_OUT "Test test test";
-};
+BAIL_OUT "Test test test";
 pass;
 done_testing;
