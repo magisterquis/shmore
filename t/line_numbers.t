@@ -4,7 +4,7 @@
 # Make sure the README has the right line numbers
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20250218
+# Last Modified 20250219
 
 use warnings;
 use strict;
@@ -50,4 +50,4 @@ while (my $f = <"./src/*.subr">) {
 }
 
 # Make sure line numbers line up.
-is_deeply \%readme_lns, \%file_lns, "Function files and lines are the same";
+is_deeply \%readme_lns, \%file_lns, "Function files and lines in the README are correct";
