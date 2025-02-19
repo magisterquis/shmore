@@ -22,7 +22,7 @@ no warnings 'experimental::signatures';
 our @EXPORT = qw/slurp test_glob/;
 
 # Shells under which to test the scripts.
-our @shells = ("ash", "bash", "dash", "ksh", "sh", "zsh");
+our @shells = ("ash", "bash", "dash", "ksh", "ksh93", "sh", "yash", "zsh");
 
 # have_shell returns true if we can execute $shell (which may be any program).
 sub have_shell($shell) { defined can_run($shell); }
