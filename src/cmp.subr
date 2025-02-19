@@ -2,7 +2,7 @@
 # Inexact comparisons
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241126
+# Last Modified 20250218
 
 # tap_is notes whether something we got was expected.  These will be compared
 # with [ ... = ... ].
@@ -67,12 +67,20 @@ tap_cmp_ok() {
 
 	# Report the fail nicely.
 	case $2 in
-		"="|"=="|"-eq")
+		"="|"==") # Strings
 			${_tap_pf} "         got: '$1'"
 			${_tap_pf} "    expected: '$3'"
+                        ;;
+                "-eq")   # Numbers
+			${_tap_pf} "         got: $1"
+			${_tap_pf} "    expected: $3"
 			;;
-		"!="|"-ne")   
+                "!=")     # Strings
 			${_tap_pf} "         got: '$1'"
+			${_tap_pf} "    expected: anything else"
+			;;
+                "-ne")    # Numbers
+			${_tap_pf} "         got: $1"
 			${_tap_pf} "    expected: anything else"
 			;;
 		*)        
