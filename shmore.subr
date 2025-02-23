@@ -2,7 +2,7 @@
 # Shell knockoff of Test::More
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250220
+# Last Modified 20250223
 
 # Shmore's source repository is
 # https://github.com/magisterquis/shmore
@@ -335,27 +335,15 @@ tap_done_testing() {
         if [ "$TAP_RETURN_MAX_FAIL" -lt "${_tap_doner}" ]; then
                 _tap_doner=$TAP_RETURN_MAX_FAIL
         fi
-        # If we didn't make a plan, assume we ran as many tests as we
-        # should have.
-        if [ 0 -eq ${_tap_nplan} ] && [ 0 -ne ${_tap_ntest} ]; then
-                tap_plan ${_tap_ntest}
-        fi
         # Make sure we ran the right amount of tests.
-        if [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
-                tap_is "${_tap_ntest}" "${_tap_nplan}" \
-                        "planned to run ${_tap_nplan} but \
-actually ran ${_tap_ntest}"
+        if [ 0 -ne ${_tap_nplan} ] && [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
+                tap_ok 1 "planned to run ${_tap_nplan} but \
+done_testing() expects ${_tap_ntest}" "$0" $LINENO
                 _tap_doner=${_tap_nfail}
         fi
-        # Note if we failed tests.
-        if [ 0 -ne ${_tap_nfail} ]; then
-                _tap_s=tests
-                if [ 1 -eq ${_tap_nfail} ]; then
-                        _tap_s=test
-                fi
-                tap_diag "Looks like you failed ${_tap_nfail} ${_tap_s} \
-of ${_tap_ntest}." >&2
-        fi
+
+        # Print a couple more messages, if need be.
+        _tap_finalize
 
         # If all went well in TAP-land, we'll use the shell's exit status in
         # case there was a syntax error or something equally unhappy and the
@@ -378,6 +366,45 @@ if [ -z "$TAP_NOTRAP" ]; then
         # like EVERY OTHER SHELL.  Turns out ksh93 is just as bad.
         trap 'tap_done_testing || exit $?' EXIT
 fi
+
+# _tap_finalize does a few checks to make sure we've run everything we said
+# we would.  It returns nonzero if we failed a test or got the wrong number
+# of tests.
+_tap_finalize() {
+        # If we didn't make a plan, assume we ran as many tests as we
+        # should have.
+        if [ 0 -eq ${_tap_nplan} ] && [ 0 -ne ${_tap_ntest} ]; then
+                tap_plan ${_tap_ntest}
+        fi
+        # Note if we didn't run enough tests.
+        _tap_qualifier=
+        if [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
+                _tap_qualifier=" run"
+                _tap_s=
+                if [ 1 -ne ${_tap_nplan} ]; then
+                        _tap_s=s
+                fi
+                tap_diag "Looks like you planned ${_tap_nplan} test${_tap_s} \
+but ran ${_tap_ntest}."
+        fi
+        # Note if we failed tests.
+        if [ 0 -ne ${_tap_nfail} ]; then
+                _tap_s=
+                if [ 1 -ne ${_tap_nfail} ]; then
+                        _tap_s=s
+                fi
+                tap_diag "Looks like you failed ${_tap_nfail} test${_tap_s} \
+of ${_tap_ntest}${_tap_qualifier}." >&2
+        fi
+
+        # Return indicates if all tests passed.
+        if [ 0 -ne ${_tap_nfail} ]; then
+                return ${_tap_nfail}
+        elif [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
+                return 1
+        fi
+        return 0
+}
 
 # tap_plan prints the number of tests we expect
 #
@@ -429,40 +456,41 @@ tap_subtest() {
         tap_note "Subtest: $1"
 
         # Run the subtest with extra spaces
-        _tap_ret=0
+        _tap_subtest_ret=0
         (
-                trap tap_done_testing EXIT
                 _tap_save_space=${_tap_space}
                 tap_reset
                 _tap_space="    ${_tap_save_space}"
                 _tap_save_space=
-                "$2"
-                RET=$?
+                "$2" || :
                 # If we didn't run any tests at all let someone know.
-                if [ 0 -eq ${_tap_ntest} ] && [ -z "${_tap_bailo}" ]; then
+                if [ -n "${_tap_bailo}" ]; then
+                        exit $TAP_RETURN_BAILED_OUT
+                elif [ 0 -eq ${_tap_ntest} ]; then
                         _tap_echo "1..0"
                         tap_diag "No tests run!"
-                        RET=$TAP_RETURN_NO_SUBTESTS_RUN
+                        exit $TAP_RETURN_NO_SUBTESTS_RUN
                 fi
-                tap_done_testing && exit "$RET"
-        ) || _tap_ret=$?
+                set +e
+                _tap_finalize
+                [ 0 -eq $? ]
+        ) || _tap_subtest_ret=$?
 
         # If we've bailed, note it for the rest of testing.  There's no really
         # good way to pass things back from subshells.
         if [ -z "$_tap_bailo" ] && \
-                [ $TAP_RETURN_BAILED_OUT -eq ${_tap_ret} ]; then
+                [ $TAP_RETURN_BAILED_OUT -eq ${_tap_subtest_ret} ]; then
 
                 _tap_bailo="Bailed in subtest $2"
                 return
         # If we didn't get any subtests, note it as an error.
-        elif [ $TAP_RETURN_NO_SUBTESTS_RUN -eq ${_tap_ret} ]; then
+        elif [ $TAP_RETURN_NO_SUBTESTS_RUN -eq ${_tap_subtest_ret} ]; then
                 tap_ok 1 "No tests run for subtest "'"'"$1"'"' "$3" "$4"
                 return
         fi
 
-
         # Emit the ok/not ok message and note success/fail.
-        tap_ok "${_tap_ret}" "$1" "$3" "$4"
+        tap_ok "${_tap_subtest_ret}" "$1" "$3" "$4"
 }
 
 # tap_ok notes whether a test succeeded or failed.
