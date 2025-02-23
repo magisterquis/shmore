@@ -4,7 +4,7 @@
 # Make sure we don't have any DEBUGs 
 # By J. Stuart McMurray
 # Created 20250218
-# Last Modified 20250218
+# Last Modified 20250222
 
 use warnings;
 use strict;
@@ -12,24 +12,35 @@ use strict;
 use File::Find;
 use Test::More;
 
-# check checks each regular file found by find for the presence of #\s+DEBUG,
-# with or without a space.
-sub check {
+# tocheck is our list of files to check.
+my @tocheck;
+
+# gather_sources puts the file found by find in tocheck if it's worth checking.
+# It skips anything in .git, irregular files, and vim swapfiles.
+sub gather_sources {
         # Don't bother with the .git directory
         return if $File::Find::dir =~ m,\./\.git,;
         # Don't bother if this isn't a file
         return unless -f;
+        # Don't bother with vim swapfiles.
+        return if $File::Find::name =~ /\.sw.$/;
+        # Looks worth checking.
+        push @tocheck, $File::Find::name;
+}
+find({wanted => \&gather_sources, no_chdir => 1}, ".");
 
+# Check ALL the files!
+plan tests => 0+@tocheck;
+for my $fn (@tocheck) {
         # Slurp and check for #\s+DEBUGs
-        open my $F, "<", $File::Find::name or die "Could not open $_: $!";
+        open my $F, "<", $fn or die "Could not open $fn: $!";
         my @ls; # Lines with The Thing
-        while (my $l = <$F>) {
-                if ($l =~ /#\s+DEBUG/i) {
+        while (<$F>) {
+                if (/#\s+DEBUG/i) {
                         push @ls, $.;
                 }
         }
-        is join(" ", @ls), "", "$File::Find::name has no lines with DEBUG";
+        is join(" ", @ls), "", "$fn has no lines with DEBUG";
 }
-find({wanted => \&check, no_chdir => 1}, ".");
 
 done_testing;
