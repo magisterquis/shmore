@@ -2,7 +2,7 @@
 # Test shmore
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250222
+# Last Modified 20250229
 
 all: shmore.subr test ## Build and test shmore.subr (default)
 
@@ -15,7 +15,7 @@ shmore.subr: src/readsrc.awk src/*.subr src/header.m4 ## Build shmore.subr
 
 test: shmore.subr ## Test ALL the shmores!
 	prove -It examples/
-	prove -It --directives t/
+	prove -It --directives
 .PHONY: test
 
 clean: ## Remove the built shmore.subr
