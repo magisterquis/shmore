@@ -142,6 +142,30 @@ Shells which don't support
 will cause large numbers of test failures, but these are more or less
 false-positivish.  
 
+### Testing on other OSs
+Testing on non-OpenBSD OSs probably won't work all that well with `make test`
+but should work fine with `prove -It --directives`.
+
+Alternatively, [`t/digitalocean`](./t/digitalocean) has support for spinning up
+a handful of DigitalOcean Droplets for running tests on different Linux
+distros.  If the stars align, it should be as simple as setting up
+[`doctl`](https://docs.digitalocean.com/reference/doctl/) and, from this
+directory, running
+```sh
+make spawn_droplets
+make test
+```
+and then when the Droplets are no longer needed,
+```sh
+make clean_droplets
+```
+More or less anything POSIXish and SSHable can be used as well by adding a
+file to [`t/digitalocean/t`] with an SSH command to get to it, e.g.
+```sh
+echo 'ssh -p 4444 test0r@10.3.4.5' > t/digitalocean/manual.ssh
+```
+Test output will be in files named `t/digitalocean/t/*.tout`.
+
 Quirks
 ------
 There are a few quirks to using this library which aren't obvious at first
