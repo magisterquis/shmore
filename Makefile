@@ -2,7 +2,6 @@
 # Test shmore
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250228
 # Last Modified 20250301
 
 # Directory for spawining and testing with DigitalOcean droplets (not default).
