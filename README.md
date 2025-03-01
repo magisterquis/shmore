@@ -9,8 +9,20 @@ Just copy [`shmore.subr`](./shmore.subr)
 ([raw](https://raw.githubusercontent.com/magisterquis/shmore/refs/heads/master/shmore.subr))
 somewhere and source it.
 
-Tested with `bash`, `dash`, `ksh`, `ksh93`, `sh`, `yash`, and `zsh` on OpenBSD
-and macOS.  It should work elsewhere as well.
+Tested with
+- `ash` (Which may just be dash, on Debian)
+- [`bash`](https://tiswww.case.edu/php/chet/bash/bashtop.html)
+- [`dash`](http://gondor.apana.org.au/~herbert/dash/)
+- `ksh` (Implementation varies)
+- [`ksh93`](https://github.com/ksh93/ksh)
+- [`mksh`](https://www.mirbsd.org/mksh.htm)
+- [`posh`](https://salsa.debian.org/clint/posh)
+- `sh` (Implementation varies)
+- [`yash`](http://magicant.github.io/yash/)
+- [`zsh`](https://zsh.sourceforge.io)
+on OpenBSD, macOS, and most of
+[DigitalOcean's Linux distros](https://docs.digitalocean.com/products/droplets/details/images/).
+It should work elsewhere as well.
 
 Examples are in [`./examples`](./examples), and have a look at [`wtrtdtmlb`'s
 tests](https://github.com/magisterquis/wtrtdtmlb/tree/master/src/containers/jankins/t)
