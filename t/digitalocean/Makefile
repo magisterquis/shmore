@@ -8,10 +8,9 @@
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
 			--format Slug --no-header | sort -u
 DEFAULT_SLUGS         = almalinux-9-x64 centos-stream-9-x64 debian-11-x64\
-			debian-12-x64 fedora-41-x64 gpu-h100x1-base\
-			gpu-h100x8-base rockylinux-8-x64 rockylinux-9-x64\
-			ubuntu-20-04-x64 ubuntu-22-04-x64 ubuntu-24-04-x64\
-			ubuntu-24-10-x64
+			debian-12-x64 fedora-41-x64 rockylinux-8-x64\
+			rockylinux-9-x64 ubuntu-20-04-x64 ubuntu-22-04-x64\
+			ubuntu-24-04-x64 ubuntu-24-10-x64
 DEFAULT_SSH_KEYS      = ${HOME}/.ssh_id_rsa ${HOME}/.ssh/id_ed25519\
 			${HOME}/.ssh/id_ed25519_shmore
 KNOWN_SLUGS           = almalinux-8-x64 almalinux-9-x64 centos-stream-9-x64\
