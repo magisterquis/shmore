@@ -36,7 +36,7 @@ tap_subtest() {
                 tap_reset
                 _tap_space="    ${_tap_save_space}"
                 _tap_save_space=
-                "$2" || :
+                eval "$2" || :
                 # Nothing to do after bailing
                 if [ -n "${_tap_bailo}" ]; then
                         exit $TAP_RETURN_BAILED_OUT
