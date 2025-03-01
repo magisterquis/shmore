@@ -1,2 +1,3 @@
 .*.swp
-./t/digitalocean/t
+/t/digitalocean/t/shmore-test-do-*
+/t/digitalocean/t/ssh_key_id
