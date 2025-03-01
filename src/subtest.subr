@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250222
+# Last Modified 20250301
 
 # tap_subtest runs a subtest, which should normally be its own function
 # i.e. mysubtest() { tap_... }; tap_subtest "foo" mysubtest.
@@ -32,13 +32,22 @@ tap_subtest() {
         _tap_subtest_ret=0
         (
                 _tap_save_space=${_tap_space}
+                _tap_save_ntest=${_tap_ntest}
                 tap_reset
                 _tap_space="    ${_tap_save_space}"
                 _tap_save_space=
                 "$2" || :
-                # If we didn't run any tests at all let someone know.
+                # Nothing to do after bailing
                 if [ -n "${_tap_bailo}" ]; then
                         exit $TAP_RETURN_BAILED_OUT
+                # We log the skip_all pass/fail here because communicating
+                # out of the subshell is more trouble than its worth
+                elif [ -n "${_tap_skipa}" ]; then
+                        _tap_space="${_tap_save_space}"
+                        _tap_ntest="${_tap_save_ntest}"
+                        tap_skip "${_tap_skipa}" 1
+                        return $TAP_RETURN_SKIPPED_ALL
+                # If we didn't run any tests at all let someone know.
                 elif [ 0 -eq ${_tap_ntest} ]; then
                         _tap_echo "1..0"
                         tap_diag "No tests run!"
@@ -55,6 +64,11 @@ tap_subtest() {
                 [ $TAP_RETURN_BAILED_OUT -eq ${_tap_subtest_ret} ]; then
 
                 _tap_bailo="Bailed in subtest $2"
+                return
+        # A skipped_all subtest already logged its own success or failure; we
+        # just need to note that another test was run.
+        elif [ $TAP_RETURN_SKIPPED_ALL -eq ${_tap_subtest_ret} ]; then
+                : $((_tap_ntest+=1))
                 return
         # If we didn't get any subtests, note it as an error.
         elif [ $TAP_RETURN_NO_SUBTESTS_RUN -eq ${_tap_subtest_ret} ]; then

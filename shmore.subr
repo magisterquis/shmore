@@ -2,7 +2,7 @@
 # Shell knockoff of Test::More
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250223
+# Last Modified 20250302
 
 # Shmore's source repository is
 # https://github.com/magisterquis/shmore
@@ -276,6 +276,7 @@ TAP_RETURN_NOT_ENOUGH_ARGUMENTS=242
 TAP_RETURN_PLAN_ALREADY_PRINTED=243
 TAP_RETURN_WRONG_TEST_COUNT=244
 TAP_RETURN_NO_SUBTESTS_RUN=245
+TAP_RETURN_SKIPPED_ALL=246
 TAP_RETURN_BAILED_OUT=255
 
 # This all works until we run multi-threaded.
@@ -284,6 +285,7 @@ _tap_doner=
 _tap_nfail=0
 _tap_nplan=0
 _tap_ntest=0
+_tap_skipa=
 _tap_space=
 
 # tap_reset resets shmore's internal state to the same state as before any
@@ -296,6 +298,7 @@ tap_reset() {
         _tap_nfail=0
         _tap_nplan=0
         _tap_ntest=0
+        _tap_skipa=
         _tap_space=
 }
 
@@ -373,7 +376,8 @@ fi
 _tap_finalize() {
         # If we didn't make a plan, assume we ran as many tests as we
         # should have.
-        if [ 0 -eq ${_tap_nplan} ] && [ 0 -ne ${_tap_ntest} ]; then
+        if [ -z "${_tap_skipa}" ] &&
+                [ 0 -eq ${_tap_nplan} ] && [ 0 -ne ${_tap_ntest} ]; then
                 tap_plan ${_tap_ntest}
         fi
         # Note if we didn't run enough tests.
@@ -406,10 +410,13 @@ of ${_tap_ntest}${_tap_qualifier}." >&2
         return 0
 }
 
-# tap_plan prints the number of tests we expect
+# tap_plan prints the number of tests we expect.  Specifying 0 subtests lets a
+# test harness know the script or subtest will be skipped, similar to
+# tap_skip or Test::More's skip_all, but does not exit the script or function.
 #
 # Arguments:
-# $1 - The number of tests which should be run
+# $1 - The number of tests which should be run, or 0 to skip testing
+# $2 - If $1 is 0, the reason for skipping testing
 tap_plan() {
         # Don't do anything if we've bailed.
         if [ -n "${_tap_bailo}" ]; then
@@ -428,7 +435,12 @@ tap_plan() {
         fi
         # Work out how many tests we're signing ourselves up for
         _tap_nplan=$(($1))
-        _tap_echo "1..${_tap_nplan}"
+        _tap_plan_msg="1..${_tap_nplan}"
+        if [ 0 -eq ${_tap_nplan} ]; then
+                _tap_skipa=${2:-"???"}
+                _tap_plan_msg="${_tap_plan_msg} # SKIP ${_tap_skipa}"
+        fi
+        _tap_echo "${_tap_plan_msg}"
 }
 
 # tap_subtest runs a subtest, which should normally be its own function
@@ -459,13 +471,22 @@ tap_subtest() {
         _tap_subtest_ret=0
         (
                 _tap_save_space=${_tap_space}
+                _tap_save_ntest=${_tap_ntest}
                 tap_reset
                 _tap_space="    ${_tap_save_space}"
                 _tap_save_space=
                 "$2" || :
-                # If we didn't run any tests at all let someone know.
+                # Nothing to do after bailing
                 if [ -n "${_tap_bailo}" ]; then
                         exit $TAP_RETURN_BAILED_OUT
+                # We log the skip_all pass/fail here because communicating
+                # out of the subshell is more trouble than its worth
+                elif [ -n "${_tap_skipa}" ]; then
+                        _tap_space="${_tap_save_space}"
+                        _tap_ntest="${_tap_save_ntest}"
+                        tap_skip "${_tap_skipa}" 1
+                        return $TAP_RETURN_SKIPPED_ALL
+                # If we didn't run any tests at all let someone know.
                 elif [ 0 -eq ${_tap_ntest} ]; then
                         _tap_echo "1..0"
                         tap_diag "No tests run!"
@@ -482,6 +503,11 @@ tap_subtest() {
                 [ $TAP_RETURN_BAILED_OUT -eq ${_tap_subtest_ret} ]; then
 
                 _tap_bailo="Bailed in subtest $2"
+                return
+        # A skipped_all subtest already logged its own success or failure; we
+        # just need to note that another test was run.
+        elif [ $TAP_RETURN_SKIPPED_ALL -eq ${_tap_subtest_ret} ]; then
+                : $((_tap_ntest+=1))
                 return
         # If we didn't get any subtests, note it as an error.
         elif [ $TAP_RETURN_NO_SUBTESTS_RUN -eq ${_tap_subtest_ret} ]; then
