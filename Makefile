@@ -20,7 +20,7 @@ shmore.subr: src/readsrc.awk src/*.subr src/header.m4 ## Build shmore.subr
 
 test: shmore.subr ## Test ALL the shmores!
 	prove -It examples/
-	prove -It --directives t/
+	prove -It --directives
 .if ! empty(DO_SSH)
 	${DO_MAKE} test
 .endif
