@@ -2,10 +2,9 @@
 #
 # echo.pl
 # Test diag and note
-# Test the simplest test function
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250201
+# Last Modified 20250301
 
 use warnings;
 use strict;
