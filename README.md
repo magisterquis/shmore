@@ -20,6 +20,7 @@ Tested with
 - `sh` (Implementation varies)
 - [`yash`](http://magicant.github.io/yash/)
 - [`zsh`](https://zsh.sourceforge.io)
+
 on OpenBSD, macOS, and most of
 [DigitalOcean's Linux distros](https://docs.digitalocean.com/products/droplets/details/images/).
 It should work elsewhere as well.
