@@ -20,6 +20,7 @@ Tested with
 - `sh` (Implementation varies)
 - [`yash`](http://magicant.github.io/yash/)
 - [`zsh`](https://zsh.sourceforge.io)
+
 on OpenBSD, macOS, and most of
 [DigitalOcean's Linux distros](https://docs.digitalocean.com/products/droplets/details/images/).
 It should work elsewhere as well.
@@ -114,7 +115,7 @@ Name                                      | Description                         
 [`tap_todo_skip`](./src/maybe.subr#L42)   | Equivalent to a number of `tap_ok 1`s which also note the tests are TODO       | A Reason          | How many TODO tests will be skipped 
 [`tap_diag`](./src/echo.subr#L14)         | Print a diagnostic message to stderr                                           | The Message; arguments will be joined with `"$*"`
 [`tap_note`](./src/echo.subr#L18)         | Print a diagsontic message not seen when using a test harness                  | The Message; arguments will be joined with `"$*"`
-[`tap_plan`](./src/plan.subr#L167)        | Note and print the number of tests to run                                      | The number of tests expected to run, or 0 to skip testing | A Reason, if `$1` was `0`
+[`tap_plan`](./src/plan.subr#L167)        | Note and print the number of tests to run                                      | The number of tests expected to run, or `0` to skip testing | _A Reason, if `$1` was `0`_
 [`tap_done_testing`](./src/plan.subr#L67) | Emit a plan if `tap_plan` wasn't called or check if the correct number of tests were run if so
 [`tap_reset`](./src/plan.subr#L41)        | Reset Shmore's internal state
 [`tap_BAIL_OUT`](./src/maybe.subr#L15)    | Stops all testing                                                              | _A Reason; arguments will be joined with `"$*"`_
@@ -174,7 +175,7 @@ make clean_droplets
 More or less anything POSIXish and SSHable can be used as well by adding a
 file to [`t/digitalocean/t`] with an SSH command to get to it, e.g.
 ```sh
-echo 'ssh -p 4444 test0r@10.3.4.5' > t/digitalocean/manual.ssh
+echo 'ssh -p 4444 test0r@10.3.4.5' > t/digitalocean/t/manual.ssh
 ```
 Test output will be in files named `t/digitalocean/t/*.tout`.
 
