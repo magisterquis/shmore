@@ -4,7 +4,7 @@
 # Make sure we exit unhappily if the shell would have without us.
 # By J. Stuart McMurray
 # Created 20250219
-# Last Modified 20250219
+# Last Modified 20250308
 
 use warnings;
 use strict;
@@ -40,7 +40,7 @@ test_glob("t/testdata/shellerrexit/*.with.sh", sub ($shell, $filename) {
                 # All we really care about is the two exit codes being the
                 # same.
                 is $with_ret, $without_ret,
-                        "Exit status same as without shmore";
+                        "Exit status same as without shmore ($without_ret)";
                 };
 });
 
