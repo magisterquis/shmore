@@ -4,6 +4,7 @@ Changelog
 20250308
 --------
 - Make this changelog pass the no-DEBUG test.
+- Testing on remote hosts is a bit less boring to watch.
 
 20250302
 --------

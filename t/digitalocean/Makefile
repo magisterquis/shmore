@@ -2,7 +2,7 @@
 # Make ALL the Droplets
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20250228
+# Last Modified 20250308
 
 # Non-user-configurable varibales
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
@@ -24,7 +24,7 @@ SSH_KEY_ID_FILE       = ${TEST_DIR}/ssh_key_id
 SSH_TEST_DIR          = shmore_test
 TEST_SUFFIX           = t
 TEST_DIR              = ./t
-TEST_CMD              = prove -It --directives
+TEST_CMD              = prove -It
 TEST_TEMPLATE         = test.t.m4
 TEST_OUT_SUFFIX       = tout
 
@@ -56,7 +56,7 @@ spawn:: check_latest_images ## Spwan ALL the Droplets (default)
 .PHONY: spawn
 
 test: test_scripts ## Spawn Droplets as needed and run tests on them
-	${TEST_CMD} --jobs ${NTEST}
+	${TEST_CMD} --directives --jobs ${NTEST} --timer
 .PHONY: test
 
 # Create .t files from .ssh files.  We also include other .ssh files for just
