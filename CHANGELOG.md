@@ -1,9 +1,13 @@
 Changelog
 =========
 
+20250308
+--------
+- Make this changelog pass the no-DEBUG test.
+
 20250302
 --------
-- Add a test to make sure we've no `# DEBUG`s lying about.
+- Add a test to make sure we've no `DEBUG`s lying about.
 - `tap_cmp_ok`: Don't quote numbers.
 - Match `Test::More`'s formatting and error messages more closely.
 - Rework tests to group by test file, not shell.
