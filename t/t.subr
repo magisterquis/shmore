@@ -1,0 +1,13 @@
+# t.subr
+# Shell library for test things
+# By J. Stuart McMurray
+# Created 20250308
+# Last Modified 20250308
+
+# Set the standard options, taking into account shell silliness.
+set -eu
+if ( set -o pipefail; ) >/dev/null 2>&1; then
+        set -o pipefail
+fi
+
+# vim: ft=sh

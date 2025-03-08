@@ -3,11 +3,11 @@
 # todo.t
 # Exmaples of TODOish things
 # By J. Stuart McMurray
-# Created 20251126
-# Last Modified 20251126
+# Created 20241126
+# Last Modified 20250308
 
 # Terminate on error.  Not required, but helpful.
-set -e
+set -eu
 
 # Source shmore.
 . ./shmore.subr

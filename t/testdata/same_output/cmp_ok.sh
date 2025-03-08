@@ -4,9 +4,9 @@
 # Test cmp_ok, is, and isn't
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241109
+# Last Modified 20250308
 
-set -e
+. ./t/t.subr
 
 . ./shmore.subr
 

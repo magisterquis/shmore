@@ -2,7 +2,7 @@
 # Just test for success
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250218
+# Last Modified 20250308
 
 # tap_ok notes whether a test succeeded or failed.
 #
@@ -11,7 +11,7 @@
 # $2 - Test name (optional)
 # $3 - Test file (optional)
 # $4 - Test line (optional)
-tap_ok() { _tap_ok "$1" "$2" "$3" "$4"; }
+tap_ok() { _tap_ok "$1" "${2:-""}" "${3:-""}" "${4:-""}"; }
 
 # tap_pass is a wrapper around tap_ok 0.  The file and line are unused, but
 # left for symmetry with tap_fail.
@@ -20,7 +20,7 @@ tap_ok() { _tap_ok "$1" "$2" "$3" "$4"; }
 # $1 - Test name (optional)
 # $2 - Test file (optional)
 # $3 - Test line (optional)
-tap_pass() { tap_ok 0 "$@"; }
+tap_pass() { tap_ok 0 "${@:-""}"; }
 
 # tap_fail is a wrapper around tap_ok 0
 #
@@ -28,7 +28,7 @@ tap_pass() { tap_ok 0 "$@"; }
 # $1 - Test name (optional)
 # $2 - Test file (optional)
 # $3 - Test line (optional)
-tap_fail() { tap_ok 1 "$@"; }
+tap_fail() { tap_ok 1 "${@:-""}"; }
 
 # _tap_ok does what tap_ok says it does, but takes an additional argument to
 # specify the separator character.  This is for skips and testing and such.
@@ -72,7 +72,7 @@ _tap_ok() {
                 else
                         _tap_msg="${_tap_msg} ${_TAP_OK_SEPARATOR}"
                 fi
-                _tap_msg="${_tap_msg} $2"
+                _tap_msg="${_tap_msg} ${2:-""}"
         fi
         if [ -n "$TAP_TODO" ]; then
                 _tap_msg="${_tap_msg} # TODO $TAP_TODO"
@@ -89,7 +89,7 @@ _tap_ok() {
         if [ -n "$TAP_TODO" ]; then
                 _tap_msg=" (TODO)"
                 _tap_pf=tap_note
-        elif [ -n "$HARNESS_ACTIVE" ]; then
+        elif [ -n "${HARNESS_ACTIVE:-""}" ]; then
                 # If we're in a harness and not TODOing, we put a blank line
                 # above fails, apparently.
                 echo >&2 # Just a newline
@@ -100,7 +100,7 @@ _tap_ok() {
         _tap_l1="Failed${_tap_msg} test"
         _tap_l2="at ${3:-"???"} line ${4:-"???"}."
         if [ -n "$2" ]; then
-                ${_tap_pf} "  ${_tap_l1} '$2'"
+                ${_tap_pf} "  ${_tap_l1} '${2:-""}'"
                 ${_tap_pf} "  ${_tap_l2}"
         else
                 ${_tap_pf} "  ${_tap_l1} ${_tap_l2}"

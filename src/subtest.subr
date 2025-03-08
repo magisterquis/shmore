@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250301
+# Last Modified 20250308
 
 # tap_subtest runs a subtest, which should normally be its own function
 # i.e. mysubtest() { tap_... }; tap_subtest "foo" mysubtest.
@@ -72,12 +72,13 @@ tap_subtest() {
                 return
         # If we didn't get any subtests, note it as an error.
         elif [ $TAP_RETURN_NO_SUBTESTS_RUN -eq ${_tap_subtest_ret} ]; then
-                tap_ok 1 "No tests run for subtest "'"'"$1"'"' "$3" "$4"
+                tap_ok 1 "No tests run for subtest "'"'"$1"'"' \
+                        "${3:-""}" "${4:-""}"
                 return
         fi
 
         # Emit the ok/not ok message and note success/fail.
-        tap_ok "${_tap_subtest_ret}" "$1" "$3" "$4"
+        tap_ok "${_tap_subtest_ret}" "$1" "${3:-""}" "${4:-""}"
 }
 
 # vim: ft=sh

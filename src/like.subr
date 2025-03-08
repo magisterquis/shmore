@@ -2,7 +2,7 @@
 # Regex comparisons (with perl)
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241125
+# Last Modified 20250308
 
 # tap_like tests whether something we got matches a regex.  This uses Perl
 # under the hood.
@@ -13,11 +13,11 @@
 # $3 - Test name (optional)
 # $4 - Test file (optional)
 # $5 - Test line (optional)
-tap_like() { _tap_like "$1" "=~" "$2" "$3" "$4" "$5"; }
+tap_like() { _tap_like "$1" "=~" "$2" "${3:-""}" "${4:-""}" "${5:-""}"; }
 
 # tap_unlike is like tap_like, but makes sure the regex isn't matched, a bit
 # like isnt vs is.
-tap_unlike() { _tap_like "$1" "!~" "$2" "$3" "$4" "$5"; }
+tap_unlike() { _tap_like "$1" "!~" "$2" "${3:-""}" "${4:-""}" "${5:-""}"; }
 
 # _tap_like does what tap_like and tap_unlike says they do, except the second
 # argument is either =~ or !~ to select tap_like or tap_unlike, respectively.
@@ -45,7 +45,7 @@ _tap_like() {
         _tap_ok=0
         _tap_rex="$(perl -e 'print qr{$ARGV[0]}' "$3" 2>&1)" || _tap_ok=$?
         if [ 0 -ne "${_tap_ok}" ]; then
-                tap_fail "$4" "$5" "$6"
+                tap_fail "${4:-""}" "${5:-""}" "${6:-""}"
                 tap_diag "    '$3' doesn't look much like a regex to me."
                 tap_diag "    ${_tap_rex}"
                 return
@@ -60,12 +60,12 @@ _tap_like() {
 
         # If we have a match, life is easy.
         if ! perl -e "exit (\$ARGV[0] $2 qr{\$ARGV[1]})" "$1" "$3"; then
-                tap_pass "$4" "$5" "$6"
+                tap_pass "${4:-""}" "${5:-""}" "${6:-""}"
                 return
         fi
 
         # We don't.  Print helpful info.
-        tap_fail "$4" "$5" "$6"
+        tap_fail "${4:-""}" "${5:-""}" "${6:-""}"
         tap_diag "                  '$1'"
         if [ "=~" = "$2" ]; then
                 tap_diag "    doesn't match '${_tap_rex}'"

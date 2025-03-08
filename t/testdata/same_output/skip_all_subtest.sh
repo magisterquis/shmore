@@ -4,7 +4,7 @@
 # Test script skip_all
 # By J. Stuart McMurray
 # Created 20250301
-# Last Modified 20250301
+# Last Modified 20250308
 
 set -e
 
@@ -23,7 +23,7 @@ subtest() {
         tap_plan 0 "A subtest skip_all test"; return
         tap_pass "A never-reached subtest pass"
 }
-tap_subtest "A skippy subtest" subtest "$0" $LINENO
+tap_subtest "A skippy subtest" subtest "$0" ${LINENO:-""}
 
 
 

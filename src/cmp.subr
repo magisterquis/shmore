@@ -2,7 +2,7 @@
 # Inexact comparisons
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250218
+# Last Modified 20250308
 
 # tap_is notes whether something we got was expected.  These will be compared
 # with [ ... = ... ].
@@ -13,7 +13,7 @@
 # $3 - Test name (optional)
 # $4 - Test file (optional)
 # $5 - Test line (optional)
-tap_is() { tap_cmp_ok "$1" "=" "$2" "$3" "$4" "$5"; }
+tap_is() { tap_cmp_ok "$1" "=" "$2" "${3:-""}" "${4:-""}" "${5:-""}"; }
 
 # tap_is notes whether something we got was anything but somthing.  These will
 # be compared with [ ... != ... ].
@@ -24,7 +24,7 @@ tap_is() { tap_cmp_ok "$1" "=" "$2" "$3" "$4" "$5"; }
 # $3 - Test name (optional)
 # $4 - Test file (optional)
 # $5 - Test line (optional)
-tap_isnt() { tap_cmp_ok "$1" "!=" "$2" "$3" "$4" "$5"; }
+tap_isnt() { tap_cmp_ok "$1" "!=" "$2" "${3:-""}" "${4:-""}" "${5:-""}"; }
 
 # tap_cmp_ok compares two arguments with any of test(1)'s binary operators.
 # It is similar to test $1 $2 $3; tap_ok $? but with better logging and less
@@ -52,7 +52,7 @@ tap_cmp_ok() {
 	# Do the comparing itself.
 	_tap_ok=0
 	test "$1" "$2" "$3" || _tap_ok=$?
-	tap_ok "${_tap_ok}" "$4" "$5" "$6"
+	tap_ok "${_tap_ok}" "${4:-""}" "${5:-""}" "${6:-""}"
 
 	# If the test passed, no need to print anything else.
 	if [ 0 -eq ${_tap_ok} ]; then

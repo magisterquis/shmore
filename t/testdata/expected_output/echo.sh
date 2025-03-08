@@ -4,9 +4,9 @@
 # Test tap_note and tap_diag
 # By J. Stuart McMurray
 # Created 20250201
-# Last Modified 20250201
+# Last Modified 20250308
 
-set -e
+. ./t/t.subr
 
 . ./shmore.subr
 

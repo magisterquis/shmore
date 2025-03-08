@@ -3,6 +3,7 @@ Changelog
 
 20250308
 --------
+- Everything works with `set -euo pipefail` now!
 - Make this changelog pass the no-DEBUG test.
 - Testing on remote hosts is a bit less boring to watch.
 - Assorted improvements to tests.

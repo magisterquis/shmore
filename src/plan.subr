@@ -2,19 +2,19 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250222
+# Last Modified 20250308
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
 # Surrounding a group of tests in TAP_TODO=... / TAP_TODO= makes for a
 # practical TODO list; as each TODO test is done, move it outside the TAP_TODO
 # lines.
-TAP_TODO=$TAP_TODO
+TAP_TODO=${TAP_TODO:-""}
 
 # TAP_NOTRAP, if set to a non-empty string, causes tap_done_testing to not
 # be the EXIT trap.  This is handy for scripts which already use the EXIT trap
 # or for using shmore in functions inside a script.
-TAP_NOTRAP=$TAP_NOTRAP
+TAP_NOTRAP=${TAP_NOTRAP:-""}
 
 # Return values.
 TAP_RETURN_MAX_FAIL=240
@@ -35,11 +35,17 @@ _tap_ntest=0
 _tap_skipa=
 _tap_space=
 
+# These are only used by _tap_ok but are set here for set -u.
+_TAP_OK_NONOTOKDIAG=
+_TAP_OK_SEPARATOR=
+
 # tap_reset resets shmore's internal state to the same state as before any
 # tests are run.  It doesn't touch the EXIT trap, though.  This is useful for
 # running tests in functions, and not in a standalone script.
 tap_reset() {
         TAP_TODO=
+        _TAP_OK_NONOTOKDIAG=
+        _TAP_OK_SEPARATOR=
         _tap_bailo=
         _tap_doner=
         _tap_nfail=0
@@ -88,7 +94,7 @@ tap_done_testing() {
         # Make sure we ran the right amount of tests.
         if [ 0 -ne ${_tap_nplan} ] && [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
                 tap_ok 1 "planned to run ${_tap_nplan} but \
-done_testing() expects ${_tap_ntest}" "$0" $LINENO
+done_testing() expects ${_tap_ntest}" "$0" ${LINENO:-""}
                 _tap_doner=${_tap_nfail}
         fi
 

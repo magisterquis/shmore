@@ -4,9 +4,9 @@
 # Test tap_cmp_ok
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20241109
+# Last Modified 20250308
 
-set -e
+. ./t/t.subr
 
 . ./shmore.subr
 

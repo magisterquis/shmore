@@ -4,7 +4,7 @@
 # Make sure the README has the right line numbers
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20250219
+# Last Modified 20250308
 
 use warnings;
 use strict;
@@ -36,7 +36,7 @@ while (my $f = <"./src/*.subr">) {
         open my $H, "<", $f or die "open $f: $!";
         while (<$H>) {
                 next unless /^(tap_[_[:alpha:]]+)\(\)/ or
-                        /^(TAP_[A-Z]+)=\$\g{1}/;
+                        /^(TAP_[A-Z]+)=\$\{\g{1}:-""\}/;
                 # Make sure we don't have dupes
                 if (exists $file_lns{$1}) {
                         die "Duplicate function: $1";
@@ -50,4 +50,5 @@ while (my $f = <"./src/*.subr">) {
 }
 
 # Make sure line numbers line up.
-is_deeply \%readme_lns, \%file_lns, "Function files and lines in the README are correct";
+is_deeply \%readme_lns, \%file_lns,
+        "Function files and lines in the README are correct";

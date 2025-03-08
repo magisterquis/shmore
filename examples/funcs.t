@@ -3,11 +3,11 @@
 # funcs.t
 # Put tests in functions
 # By J. Stuart McMurray
-# Created 20251126
-# Last Modified 20251126
+# Created 20241126
+# Last Modified 20250308
 
 # Terminate on error.  Not required, but helpful.
-set -e
+set -eu
 
 # We can put tests in a function and not in full-blown script.  We'll not want
 # tap_done_testing to be called automatically in this case.

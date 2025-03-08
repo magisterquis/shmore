@@ -4,9 +4,10 @@
 # Show off subtests
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20250301
+# Last Modified 20250308
 
-# Terminate on error.  Not required, but helpful.
+# Terminate on error.  Not required, but helpful.  Even better is
+# set -euo pipefail, but dash doesn't have $LINENO.
 set -e
 
 # Source shmore.

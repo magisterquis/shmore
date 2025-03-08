@@ -4,9 +4,9 @@
 # Test bailing out from a test in a subshell
 # By J. Stuart McMurray
 # Created 20241112
-# Last Modified 20250201
+# Last Modified 20250308
 
-set -e
+. ./t/t.subr
 
 . ./shmore.subr
 
