@@ -4,7 +4,7 @@
 # Run a subtests passing shell names
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250225
+# Last Modified 20250308
 
 package ShellTest;
 
@@ -26,6 +26,28 @@ our @shells = ("ash", "bash", "dash", "ksh", "ksh93", "mksh", "posh", "sh", "yas
 
 # have_shell returns true if we can execute $shell (which may be any program).
 sub have_shell($shell) { defined can_run($shell); }
+
+# print_shells prints a list of shells we have and don't have.
+sub print_shells {
+        # Work out what we have and don't have.
+        my (@haves, @lacks);
+        for my $shell (@shells) {
+                if (have_shell $shell) {
+                        push @haves, $shell;
+                } else {
+                        push @lacks, $shell;
+                }
+        }
+        # If we have no shells, life's easy (but sad).
+        if (0 == @haves) {
+                print "We have no shells!\n";
+                return;
+        }
+        # Make a nice pair of lists.
+        local $, = " ";
+        print "Shells we have: @haves\n";
+        print "Shells we lack: @lacks\n";
+}
 
 # test_glob runs $testsub in a subtest with two arguments, a shell name and
 # a filename.  $testsub should be something like sub ($shell, $filename) {}

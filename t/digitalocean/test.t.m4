@@ -32,6 +32,7 @@ echo '1..m4_eval(m4_esyscmd(ls ../../t/*.t ../../examples/*.t | wc -l))'
         (
                 cd m4_remdir &&
                 tar -xf - &&
+                perl -It -MShellTest -e ShellTest::print_shells &&
                 m4_testcmd examples/ t/ ||:
         )
 ' 2>&1 |
