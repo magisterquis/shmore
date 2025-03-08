@@ -14,7 +14,7 @@ set -euo pipefail
 NDONE=0 # Number of tests finished
 
 # Test plan, which is the number of test scripts we have.
-echo '1..m4_eval(m4_esyscmd(ls ../../t/*.t | wc -l))'
+echo '1..m4_eval(m4_esyscmd(ls ../../t/*.t ../../examples/*.t | wc -l))'
 
 ( cd m4_srcdir &&
         tar -cf - \
@@ -32,14 +32,15 @@ echo '1..m4_eval(m4_esyscmd(ls ../../t/*.t | wc -l))'
         (
                 cd m4_remdir &&
                 tar -xf - &&
-                m4_testcmd ||:
+                m4_testcmd examples/ t/ ||:
         )
 ' 2>&1 |
 tee m4_tout |
 # Update every time a test finishes
 while read TNAME REST; do
         # Don't bother if this isn't a test result.
-        if [[ "$TNAME" != t/*.t || $REST == \(Wstat* ]]; then
+        if [[ ( "$TNAME" != t/*.t && "$TNAME" != examples/*.t ) ||
+                $REST == \(Wstat* ]]; then
                 continue
         fi
 
