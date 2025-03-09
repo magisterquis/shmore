@@ -1,6 +1,10 @@
 Changelog
 =========
 
+20250309
+--------
+- Handle DigitalOcean Droplet IP address reuse better.
+
 20250308
 --------
 - Everything works with `set -euo pipefail` now!

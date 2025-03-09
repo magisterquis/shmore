@@ -4,7 +4,7 @@
 # Spawn a Droplet
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20250228
+# Last Modified 20250309
 
 set -euo pipefail
 
@@ -109,10 +109,12 @@ if [[ -z "$DROPLET_IP" ]]; then
         log "No IP address for Droplet"
         exit 9
 fi
-if ssh-keygen -F "$DROPLET_IP"; then
+if ssh-keygen -F "$DROPLET_IP" >/dev/null; then
         # A bit racy, but should be fine.
         log "Removing stale known_hosts entry"
-        ssh-keygen -R $DROPLET_IP >/dev/null
+        ssh-keygen -R $DROPLET_IP 2>&1 | while read; do
+                log "$REPLY"
+        done
 fi
 
 # Command to SSH as root
