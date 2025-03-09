@@ -1,0 +1,5 @@
+ok 1 - A passing test
+not ok 2 - A failing test
+ok 3 - An unconditional pass
+not ok 4 - An unconditional fail
+1..4

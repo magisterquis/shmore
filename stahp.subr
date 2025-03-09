@@ -1,0 +1,50 @@
+# stahp.subr
+# Miniature test library
+# By J. Stuart McMurray
+# Created 20250301
+# Last Modified 20250309
+
+_stahp_ntest=0
+
+# stahp_plan prints a testing plan, which may be 0 to indicate the test script
+# is to be skipped.
+#
+# Arguments:
+# $@ - The number of tests to be run, empty for the number of tests which have,
+#      been run, or 0 followed by "# skip: A Reason" or similar to indicate
+#      the whole script is to be skipped.
+stahp_plan() { echo "1..${@:-$_stahp_ntest}"; }
+
+# stahp_ok indicates success if $? is 0.  Unlike the shmore equivalent and
+# Test::More::ok, this does not take an explicit indication of success as an
+# argument.
+#
+# Arguments:
+# $@ - A test name, which will be joined as "$@" (optional)
+stahp_ok() {
+        _stahp_ok=$?
+        _stahp_ntest=$((1+_stahp_ntest))
+        _stahp_msg="$_stahp_ntest"
+        [ -z "${@:-""}" ] || _stahp_msg="$_stahp_msg - $@"
+        if [ 0 -eq $_stahp_ok ]; then
+                echo "ok $_stahp_msg"
+        else
+                echo "not ok $_stahp_msg"
+                echo >&2
+                echo "#   Failed test $_stahp_msg" >&2
+        fi
+}
+
+# stahp_pass indicates a test passed.
+#
+# Arguments:
+# $@ - A test name, which will be joined as "$@" (optional)
+stahp_pass() { true;  stahp_ok "${@:-""}"; }
+
+# stahp_fail indicates a test failed.
+#
+# Arguments:
+# $@ - A test name, which will be joined as "$@" (optional)
+stahp_fail() { false; stahp_ok "${@:-""}"; }
+
+# vim: ft=sh

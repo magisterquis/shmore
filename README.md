@@ -29,6 +29,11 @@ Examples are in [`./examples`](./examples), and have a look at [`wtrtdtmlb`'s
 tests](https://github.com/magisterquis/wtrtdtmlb/tree/master/src/containers/jankins/t)
 for IRL usage.
 
+A much smaller TAP-producing library can be found in
+[`stahp.subr`](./stahp.subr)
+([raw](https://raw.githubusercontent.com/magisterquis/shmore/refs/heads/master/stahp.subr)),
+with a bit of documentation in [`stahp.md`](./stahp.md).
+
 Example
 -------
 This test script
@@ -133,7 +138,6 @@ Name                                | Description
 ------------------------------------|------------
 [`TAP_TODO`](./src/plan.subr#L12)   | When set, notes that tests are expected to fail
 [`TAP_NOTRAP`](./src/plan.subr#L17) | When set before sourcing [`shmore.subr`](./shmore.subr), prevents `tap_done_testing` from being set as the `EXIT` trap.
-
 
 Code Changes
 ------------

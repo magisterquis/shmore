@@ -6,6 +6,7 @@ Changelog
 - Everything works with `set -euo pipefail` now!
 - Make this changelog pass the no-DEBUG test.
 - Testing on remote hosts is a bit less boring to watch.
+- Added [Stahp](./stahp.md), a much smaller shell TAP producer.
 - Assorted improvements to tests.
 
 20250302

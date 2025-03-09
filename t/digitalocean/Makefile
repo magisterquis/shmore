@@ -2,7 +2,7 @@
 # Make ALL the Droplets
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20250308
+# Last Modified 20250309
 
 # Non-user-configurable varibales
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
@@ -86,9 +86,11 @@ spawn:: ${SLUGF}.${SSH_SUFFIX}
 # Roll t/*.t files from t/*.ssh, which actually happens in a suffix rule.
 test_scripts:: ${TEST_SCRIPTS}
 .PHONY: test_scripts
-# Note every test script also depends on the macro file and the SSH file
+# Note every test script also depends on the macro file, the SSH file, and the
+# tests directories (for number of tests).
 .for F in ${TEST_SCRIPTS}
 $F: ${TEST_TEMPLATE} ${F:R}.${SSH_SUFFIX}
+$F: ${SHMORE_DIR}/t ${SHMORE_DIR}/examples
 .endfor
 # NTEST is how many test scripts we (will) have, for parallel testing.
 NTEST !!= echo ${TEST_SCRIPTS:QL} | tr ' ' '\n' | sort -u | wc -l | tr -d ' '
