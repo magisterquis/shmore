@@ -4,9 +4,11 @@
 # Example with the importantest bits
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20250308
+# Last Modified 20250309
 
-# Terminate on error.  Not required, but helpful.
+# Terminate on error.  Not required, but helpful.  We'd normally just
+# set -euo pipefail, but dash...
+if ( set -o pipefail ) >/dev/null 2>&1; then set -o pipefail; fi
 set -eu
 
 # Source shmore.

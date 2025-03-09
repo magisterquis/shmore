@@ -4,6 +4,8 @@ Changelog
 20250309
 --------
 - Handle DigitalOcean Droplet IP address reuse better.
+- Minor [README](./README.md) and [quickstart](examples/quickstart.t)
+  improvements.
 
 20250308
 --------

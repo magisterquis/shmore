@@ -35,6 +35,8 @@ This test script
 ```sh
 #!/bin/sh
 
+set -euo pipefail # Works just fine
+
 # Source shmore.
 . ./shmore.subr
 
@@ -148,13 +150,6 @@ Testing
 -------
 Tests are in [`t`](./t) and testable examples in [`examples`](./examples).
 
-Shells which don't support
-[`LINENO`](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#:~:text=LINENO)
-(Like Debian's
-[`sh`](https://manpages.debian.org/bookworm/dash/sh.1.en.html#:~:text=dash%20is%20a%20POSIX-compliant%20implementation%20of%20/bin/sh))
-will cause large numbers of test failures, but these are more or less
-false-positivish.  
-
 ### Testing on other OSs
 Testing on non-OpenBSD OSs probably won't work all that well with `make test`
 but should work fine with `prove -It --directives`.
@@ -173,7 +168,8 @@ and then when the Droplets are no longer needed,
 make clean_droplets
 ```
 More or less anything POSIXish and SSHable can be used as well by adding a
-file to [`t/digitalocean/t`] with an SSH command to get to it, e.g.
+file to [`t/digitalocean/t`](./t/digitalocean/t) with an SSH command to get to
+it, e.g.
 ```sh
 echo 'ssh -p 4444 test0r@10.3.4.5' > t/digitalocean/t/manual.ssh
 ```
@@ -185,7 +181,7 @@ There are a few quirks to using this library which aren't obvious at first
 glance.
 
 1.  Subtests can't be run in a subshell, as there's no (good) way to ensure
-    `tap_done_testing` is called or expose variables to the `tap_subtest`.
+    `tap_done_testing` is called or expose variables back to `tap_subtest`.
 2.  Line numbers don't work on `dash` and presumably `ash`.
-3.  Different shells have a different idea of what `$LINENO` and `$0` are in
+3.  Different shells have different ideas of what `$LINENO` and `$0` are in
     functions.
