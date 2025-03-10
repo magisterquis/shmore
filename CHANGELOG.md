@@ -1,6 +1,11 @@
 Changelog
 =========
 
+20250310
+--------
+- `tap_subtest`: Don't print double failure counts if `tap_done_testing` is
+  called in an `EXIT` trap.
+
 20250309
 --------
 - Handle DigitalOcean Droplet IP address reuse better.
