@@ -2,7 +2,7 @@
 # Maybe don't run tests, or maybe run them differently
 # By J. Stuart McMurray
 # Created 20241112
-# Last Modified 20250308
+# Last Modified 20250311
 
 # tap_BAIL_OUT ceases all testing and returns 255 after emitting the bail out
 # TAP message.  It should normally be called as return tap_BAIL_OUT.  After
@@ -11,7 +11,7 @@
 # TAP_RETURN_BAILED_OUT and tap_reset, which resets the TAP state.
 #
 # Arguments:
-# $1 - The reason for the bail (optional) 
+# $1 - The reason for the bail (optional)
 tap_BAIL_OUT() {
         _tap_bailo="Bail out!"
         if [ -n "$1" ]; then

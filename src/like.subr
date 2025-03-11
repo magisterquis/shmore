@@ -2,13 +2,13 @@
 # Regex comparisons (with perl)
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250308
+# Last Modified 20250311
 
 # tap_like tests whether something we got matches a regex.  This uses Perl
 # under the hood.
 #
 # Arguments:
-# $1 - The got 
+# $1 - The got
 # $2 - A regex
 # $3 - Test name (optional)
 # $4 - Test file (optional)
@@ -23,7 +23,7 @@ tap_unlike() { _tap_like "$1" "!~" "$2" "${3:-""}" "${4:-""}" "${5:-""}"; }
 # argument is either =~ or !~ to select tap_like or tap_unlike, respectively.
 #
 # Arguments:
-# $1 - The got 
+# $1 - The got
 # $2 - =~ or !~
 # $3 - A regex
 # $4 - Test name (optional)
@@ -50,7 +50,7 @@ _tap_like() {
                 tap_diag "    ${_tap_rex}"
                 return
         fi
-        
+
         # Make sure our matcher is a matcher
         case "$2" in
                 "=~" | "!~")                                ;; # Ok
