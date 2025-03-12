@@ -4,7 +4,7 @@
 # Ensure shmore and Test::More produce the same output
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250301
+# Last Modified 20250312
 
 use ShellTest;
 use Test::More;
@@ -60,6 +60,29 @@ sub zsh_is_old($shell) {
         return $zsh_is_old;
 }
 
+# run_perl is like test_output, but also checks for cached output.  Returns
+# a { got => "stdout/err", ret => return_code } hash as well a 1 or 0
+# indicating whether or not the result was cached.
+sub run_perl($plf) {
+        state %cache;
+        # Try getting the cached version.
+        if (exists $cache{$plf}) {
+                return $cache{$plf}, 1;
+        }
+        # Run it and make a return hash reference.
+        $? = 0;
+        my $got = remove_line_references(`perl $plf`);
+        check_ret("perl $plf", $?);
+        my $ret = $? >> 8;
+        my $res = {
+                got => $got,
+                ret => $ret,
+        };
+        # Save the hash reference and return it.
+        $cache{$plf} = $res;
+        return $res, 0;
+}
+
 # test_output checks if the output streams from the .sh file and its .pl
 # counterpart are the same.  The third argument is appended to commands to
 # run to select which output stream to read.
@@ -72,19 +95,16 @@ sub test_output($shell, $shf, $redir) {
         # Get output from both versions.
         $? = 0;
         my $sgot = remove_line_references(`$shell $shf $redir`);
+        check_ret("Shell $shell", $?);
         my $sret = $? >> 8;
-        check_ret("Shell $shell", $sret);
-        $? = 0;
-        my $pgot = remove_line_references(`perl $plf $redir`);
-        my $pret = $? >> 8;
-        check_ret("Perl", $pret);
+        my ($pres, undef) = run_perl("$plf $redir");
 
         # Make sure everything's the same.
-        is $sgot, $pgot, "Output";
+        is $sgot, $$pres{got}, "Output";
         SKIP: {
                 skip "Old zsh EXIT trap can't set exit status", 1
                         if zsh_is_old $shell;
-                is $sret, $pret, "Exit code";
+                is $sret, $$pres{ret}, "Exit code";
         }
 }
 
@@ -92,6 +112,25 @@ test_glob("t/testdata/same_output/*.sh", sub($shell, $shf) {
         plan tests => 2;
         subtest "stdout", \&test_output, $shell, $shf, "2>/dev/null";
         subtest "stderr", \&test_output, $shell, $shf, "2>&1 1>/dev/null";
-});
+}, 1);
+
+# Make sure caching worked.
+subtest "Perl script cache works" => sub {
+        plan tests => 6;
+        my ($first_got, $second_got, $cached);
+        my $pscript = q{-E 'say "Kittens"'};
+        my $want_got = "Kittens\n";
+        my $want_ret = 0;
+        # Make sure the script runs the first time.
+        ($first_got, $cached) = run_perl($pscript);
+        is $cached, 0, "First execution of test one-liner not cached";
+        is $$first_got{got}, $want_got, "Correct first test one-liner output";
+        is $$first_got{ret}, $want_ret, "Happy first test one-liner exit";
+        # Make sure the second time it's the cached output.
+        ($second_got, $cached) = run_perl($pscript);
+        is $cached, 1, "Second execution of test one-liner cached";
+        is $$second_got{got}, $want_got, "Correct second test one-liner output";
+        is $$second_got{ret}, $want_ret, "Happy second test one-liner exit";
+};
 
 done_testing;

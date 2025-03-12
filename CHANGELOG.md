@@ -1,6 +1,11 @@
 Changelog
 =========
 
+20250312
+--------
+- Cache Perl's output in [`t/same_output.t`](./t/same_output.t) to cut testing
+  time down quite a bit.
+
 20250310
 --------
 - `tap_subtest`: Don't print double failure counts if `tap_done_testing` is
