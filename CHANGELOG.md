@@ -1,6 +1,11 @@
 Changelog
 =========
 
+20250430
+--------
+- Switch to using `/bin/echo` instead of the shells' `echo` to prevent escape
+  character silliness.
+
 20250312
 --------
 - Cache Perl's output in [`t/same_output.t`](./t/same_output.t) to cut testing
