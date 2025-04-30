@@ -1,10 +1,10 @@
 #!/usr/bin/env perl
 #
-# one_fail.pl
+# fail_newlines.pl
 # Make sure a two fails plus a few oks work
 # By J. Stuart McMurray
 # Created 20250218
-# Last Modified 20250218
+# Last Modified 20250430
 
 use warnings;
 use strict;
