@@ -1,0 +1,9 @@
+1..1
+not ok 1 - No files with DEBUG comments
+
+#   Failed test 'No files with DEBUG comments'
+#   at ??? line ???.
+#          got: '104         printf("nind: %d\n", nind); /* DEBUG */
+# 105         printf("entry: %p\n", (void *)e); /* DEBUG */'
+#     expected: ''
+# Looks like you failed 1 test of 1.
