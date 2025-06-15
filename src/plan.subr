@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250310
+# Last Modified 20250615
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -96,7 +96,7 @@ tap_done_testing() {
         # Make sure we ran the right amount of tests.
         if [ 0 -ne ${_tap_nplan} ] && [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
                 tap_ok 1 "planned to run ${_tap_nplan} but \
-done_testing() expects ${_tap_ntest}" "$0" ${LINENO:-""}
+done_testing() expects ${_tap_ntest}" "$0"
                 _tap_doner=${_tap_nfail}
         fi
 

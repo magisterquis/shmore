@@ -1,6 +1,11 @@
 Changelog
 =========
 
+20250615
+--------
+- Use ??? instead of a confusing line number in the error when an unplanned
+  number of tests are run.
+
 20250613
 --------
 - Don't elide blank lines in output.
