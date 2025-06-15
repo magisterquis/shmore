@@ -1,6 +1,11 @@
 Changelog
 =========
 
+20250613
+--------
+- Don't elide blank lines in output.
+- Updated DigitalOcean known slugs list.
+
 20250430
 --------
 - Switch to using `/bin/echo` instead of the shells' `echo` to prevent escape
