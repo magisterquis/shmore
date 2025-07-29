@@ -1,5 +1,9 @@
 Changelog
 =========
+20250729
+--------
+- `tap_like` and `tap_unlike`: Don't error when checking strings with leading
+  hyphens.
 
 20250615
 --------
