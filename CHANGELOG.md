@@ -4,6 +4,7 @@ Changelog
 --------
 - `tap_like` and `tap_unlike`: Don't error when checking strings with leading
   hyphens.
+- Updated DigitalOcean known slugs list.
 
 20250615
 --------
