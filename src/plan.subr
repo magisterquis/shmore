@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250615
+# Last Modified 20250803
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -24,6 +24,7 @@ TAP_RETURN_PLAN_ALREADY_PRINTED=243
 TAP_RETURN_WRONG_TEST_COUNT=244
 TAP_RETURN_NO_SUBTESTS_RUN=245
 TAP_RETURN_SKIPPED_ALL=246
+TAP_RETURN_EXPECTED_NUMBER=247
 TAP_RETURN_BAILED_OUT=255
 
 # This all works until we run multi-threaded.

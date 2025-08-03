@@ -2,7 +2,7 @@
 # Shell knockoff of Test::More
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250729
+# Last Modified 20250803
 
 # Shmore's source repository is
 # https://github.com/magisterquis/shmore
@@ -283,6 +283,7 @@ TAP_RETURN_PLAN_ALREADY_PRINTED=243
 TAP_RETURN_WRONG_TEST_COUNT=244
 TAP_RETURN_NO_SUBTESTS_RUN=245
 TAP_RETURN_SKIPPED_ALL=246
+TAP_RETURN_EXPECTED_NUMBER=247
 TAP_RETURN_BAILED_OUT=255
 
 # This all works until we run multi-threaded.
@@ -586,14 +587,20 @@ _tap_ok() {
         fi
 
         # Need at least an ok or not.
-        if [ 1 -gt $# ] || [ -z "$1" ] ; then
+        if [ 1 -gt $# ] || [ -z "$1" ]; then
                 echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 
+        # Make sure the success value is a number.
+        if [ -z "${1##*[!0-9]*}" ]; then
+                echo "Success/unsuccess argument must be a number" >&2
+                return $TAP_RETURN_EXPECTED_NUMBER
+        fi
+
         # Bookkeeping
         : $((_tap_ntest+=1)) # dash doesn't ++, turns out.
-        if [ 0 -ne $1 ] && [ -z "$TAP_TODO" ]; then
+        if [ 0 -ne "$1" ] && [ -z "$TAP_TODO" ]; then
                 : $((_tap_nfail+=1))
         fi
         # roll the (not) ok line

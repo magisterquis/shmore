@@ -2,7 +2,7 @@
 # Just test for success
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250308
+# Last Modified 20250803
 
 # tap_ok notes whether a test succeeded or failed.
 #
@@ -50,14 +50,20 @@ _tap_ok() {
         fi
 
         # Need at least an ok or not.
-        if [ 1 -gt $# ] || [ -z "$1" ] ; then
+        if [ 1 -gt $# ] || [ -z "$1" ]; then
                 echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 
+        # Make sure the success value is a number.
+        if [ -z "${1##*[!0-9]*}" ]; then
+                echo "Success/unsuccess argument must be a number" >&2
+                return $TAP_RETURN_EXPECTED_NUMBER
+        fi
+
         # Bookkeeping
         : $((_tap_ntest+=1)) # dash doesn't ++, turns out.
-        if [ 0 -ne $1 ] && [ -z "$TAP_TODO" ]; then
+        if [ 0 -ne "$1" ] && [ -z "$TAP_TODO" ]; then
                 : $((_tap_nfail+=1))
         fi
         # roll the (not) ok line
