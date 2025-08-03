@@ -1,0 +1,10 @@
+Repetition count '2' isn't numeric
+# Subtest: A Subtest
+    Repetition count '2' isn't numeric
+    not ok 1 # TODO & SKIP A reason in the correct place
+    not ok 2 # TODO & SKIP A reason in the correct place
+    1..2
+ok 1 - A Subtest
+not ok 2 # TODO & SKIP A reason in the correct place
+not ok 3 # TODO & SKIP A reason in the correct place
+1..3

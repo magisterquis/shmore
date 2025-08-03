@@ -56,8 +56,9 @@ _tap_ok() {
         fi
 
         # Make sure the success value is a number.
-        if [ -z "${1##*[!0-9]*}" ]; then
-                echo "Success/unsuccess argument must be a number" >&2
+        if ! _tap_isnum  "$1" ; then
+                _tap_echo "Success/unsuccess value '$1'" \
+                        "isn't numeric at ${3:-"???"} line ${4:-"???"}" >&2
                 return $TAP_RETURN_EXPECTED_NUMBER
         fi
 

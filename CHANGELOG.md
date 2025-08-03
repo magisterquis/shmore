@@ -1,5 +1,10 @@
 Changelog
 =========
+20250804
+--------
+- `tap_ok` and `tap_todo_skip`: Fail more gracefully with unexpectly
+  non-numeric arguements.
+
 20250729
 --------
 - `tap_like` and `tap_unlike`: Don't error when checking strings with leading

@@ -1,0 +1,15 @@
+# util.subr
+# Utility functions
+# By J. Stuart McMurray
+# Created 20250803
+# Last Modified 20250803
+
+# _tap_must_number tests if $1 is a number.
+#
+# Arguments:
+# $1 - A value of which the numberness is to be checked
+_tap_isnum() {
+        [ -n "${1##*[!0-9]*}" ];
+}
+
+# vim: ft=sh

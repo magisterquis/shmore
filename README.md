@@ -114,7 +114,7 @@ Name                                      | Description                         
 [`tap_unlike`](./src/like.subr#L20)       | Uses Perl to test if a [regex](https://perldoc.perl.org/perlre) is not matched | The Got           | A Regex                                              | _Test Name_ | _Test File_ | _Test Line_
 [`tap_subtest`](./src/subtest.subr#L16)   | Run a [subtest](./examples/subtest.t)                                          | Subtest test name | Subtest function name                                | _Test File_ | _Test Line_
 [`tap_skip`](./src/maybe.subr#L33)        | Equivalent to a number of `tap_ok 0`'s which note tests were skipped           | A Reason          | How many tests will be skipped
-[`tap_todo_skip`](./src/maybe.subr#L42)   | Equivalent to a number of `tap_ok 1`s which also note the tests are TODO       | A Reason          | How many TODO tests will be skipped 
+[`tap_todo_skip`](./src/maybe.subr#L41)   | Equivalent to a number of `tap_ok 1`s which also note the tests are TODO       | A Reason          | How many TODO tests will be skipped
 [`tap_diag`](./src/echo.subr#L14)         | Print a diagnostic message to stderr                                           | The Message; arguments will be joined with `"$*"`
 [`tap_note`](./src/echo.subr#L18)         | Print a diagsontic message not seen when using a test harness                  | The Message; arguments will be joined with `"$*"`
 [`tap_plan`](./src/plan.subr#L182)        | Note and print the number of tests to run                                      | The number of tests expected to run, or `0` to skip testing | _A Reason, if `$1` was `0`_

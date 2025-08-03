@@ -1,7 +1,9 @@
-Success/unsuccess argument must be a number
-not ok 1 - Should succeed because we remembered a status
-
-#   Failed test 'Should succeed because we remembered a status'
-#   at test_filename line 21.
-1..1
-# Looks like you failed 1 test of 1.
+Success/unsuccess value 'Should fail because we forgot a status' isn't numeric at 14 line ???
+Success/unsuccess value 'not a number' isn't numeric at ok_without_status_filename line 15
+# Subtest: A Subtest
+    Success/unsuccess value 'not a number' isn't numeric at ok_without_status_filename line 21
+    ok 1 - A pass
+    1..1
+ok 1 - A Subtest
+ok 2 - Should succeed because we remembered a status
+1..2
