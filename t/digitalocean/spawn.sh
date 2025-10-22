@@ -4,7 +4,7 @@
 # Spawn a Droplet
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20250309
+# Last Modified 20251022
 
 set -euo pipefail
 
@@ -134,7 +134,8 @@ set -o pipefail # We no longer expect SSH to fail
 
 # Make sure cloud-init finishes ok.
 log "Droplet responds to SSH, waiting for cloud-init to finish"
-if ! $ROOT_SSH 'cloud-init status --wait >/dev/null'; then\
+set +e; $ROOT_SSH 'cloud-init status --wait >/dev/null'; RET=$?; set -e
+if [[ 0 -ne $RET && 2 -ne $RET ]]; then
         log "Cloud-init failed:"
         $ROOT_SSH tail -n 20 /var/log/cloud-init-output.log | while read; do
                 log "$REPLY";
