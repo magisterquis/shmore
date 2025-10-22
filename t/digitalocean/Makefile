@@ -2,29 +2,27 @@
 # Make ALL the Droplets
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20250729
+# Last Modified 20251011
 
 # Non-user-configurable varibales
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
 			--format Slug --no-header | sort -u
 BROKEN_SLUGS          = almalinux-8-x64
-DEFAULT_SLUGS         = almalinux-9-x64\
-			centos-stream-9-x64\
-			debian-12-x64\
+DEFAULT_SLUGS         = almalinux-10-x64 almalinux-9-x64\
+			centos-stream-10-x64 centos-stream-9-x64\
+			debian-12-x64 debian-13-x64\
 			fedora-41-x64 fedora-42-x64\
-			rockylinux-8-x64 rockylinux-9-x64\
-			ubuntu-22-04-x64 ubuntu-24-04-x64\
-			ubuntu-24-10-x64 ubuntu-25-04-x64
+			rockylinux-10-x64 rockylinux-8-x64 rockylinux-9-x64\
+			ubuntu-22-04-x64 ubuntu-24-04-x64 ubuntu-25-04-x64
 DEFAULT_SSH_KEYS      = ${HOME}/.ssh_id_rsa ${HOME}/.ssh/id_ed25519\
 			${HOME}/.ssh/id_ed25519_shmore
-KNOWN_SLUGS           = almalinux-8-x64 almalinux-9-x64\
-			centos-stream-9-x64\
-			debian-12-x64\
+KNOWN_SLUGS           = almalinux-10-x64 almalinux-8-x64 almalinux-9-x64\
+			centos-stream-10-x64 centos-stream-9-x64\
+			debian-12-x64 debian-13-x64\
 			fedora-41-x64 fedora-42-x64\
 			gpu-amd-base gpu-h100x1-base gpu-h100x8-base\
-			rockylinux-8-x64 rockylinux-9-x64\
-			ubuntu-22-04-x64 ubuntu-24-04-x64\
-			ubuntu-24-10-x64 ubuntu-25-04-x64
+			rockylinux-10-x64 rockylinux-8-x64 rockylinux-9-x64\
+			ubuntu-22-04-x64 ubuntu-24-04-x64 ubuntu-25-04-x64
 SSH_SUFFIX            = ssh
 SHMORE_DIR            = ../../
 SSH_KEY_ID_FILE       = ${TEST_DIR}/ssh_key_id
@@ -148,8 +146,7 @@ nspawn: ## Print the number of Droplets which spawn spawns
 	@echo ${SLUGS} | wc -w | tr -d ' '
 .PHONY: spawn
 
-# Make sure our idea of the DigitalOcean images is up-to-date.
-check_latest_images:
+check_latest_images: ## Make sure our idea of the DigitalOcean images is up-to-date.
 	@if [[ ${KNOWN_SLUGS:Q} != ${CURRENT_SLUGS:Q} ]]; then\
 		echo "Known distribution slug list out of date" >&2;\
 		echo "  Known slugs: ${KNOWN_SLUGS}" >&2;\
