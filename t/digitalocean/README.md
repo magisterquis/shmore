@@ -30,12 +30,10 @@ For this to work, the following (probably) have to be met
 - OpenBSD's `make(1)`, or maybe `bmake(1)` on Linux.  Maybe
 - OpenRsync (comes on OpenBSD)
 - OpenBSD's `ksh(1)`, though other ksh's may work.  May
-- [`jq`](https://jqlang.org)
 
 On OpenBSD, aside from the DigitalOcean token, this is as simple as
 ```sh
 go install github.com/digitalocean/doctl/cmd/doctl@latest
-doas pkg_add jq
 ```
 
 Configuration

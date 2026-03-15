@@ -2,6 +2,7 @@ Changelog
 =========
 20260315
 --------
+- Removed dependency on `jq`.
 - Updated DigitalOcean known slugs list.
 
 20250804

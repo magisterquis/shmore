@@ -2,7 +2,7 @@
 # Make ALL the Droplets
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20260314
+# Last Modified 20260315
 
 # Non-user-configurable varibales
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
@@ -119,10 +119,16 @@ ${SSH_KEY_ID_FILE}:
 		echo "Unable to guess SSH key" >&2\
 		exit 2;\
 	fi
-	doctl compute ssh-key list -o json |\
-		FP=$$(ssh-keygen -Emd5 -lf ${SSH_KEY} | cut -f 2 -d ' ')\
-		jq --exit-status --raw-output '[.[] |\
-		select("MD5:\(.fingerprint)" == $$ENV.FP)] | .[0].id' > $@.tmp
+	doctl compute ssh-key list |\
+		grep "$$(\
+			ssh-keygen\
+				-Emd5\
+				-lf\
+				/home/stuart/.ssh/id_ed25519_shmore|\
+			cut -f 2 -d ' ' |\
+			cut -f 2- -d :\
+		)"|\
+		awk '{print $$1}' >$@.tmp
 	mv $@.tmp $@
 
 # Sometimes it's helpful to just be able to run the same command on all of the

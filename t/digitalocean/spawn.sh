@@ -4,7 +4,7 @@
 # Spawn a Droplet
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20251022
+# Last Modified 20260315
 
 set -euo pipefail
 
@@ -84,12 +84,15 @@ CMD="doctl compute droplet create \
 --wait \
 $NAME"
 log "Creating Droplet: $CMD"
-
 export DO_JSON=$($CMD)
-if jq --exit-status --null-input\
-        '$ENV.DO_JSON | fromjson | "object" == type' >/dev/null; then
-        log "Error making Droplet: $(jq \
-                --null-input '$ENV.DO_JSON | fromjson | .errors[]')">&2;
+
+# Make sure it spawned properly.
+ERRS=$(perl -MJSON::PP -e '
+        $ret = decode_json $ENV{DO_JSON};
+        map {print $_->{detail}, $/} @{$ret->{errors}} if "HASH" eq ref($ret)
+')
+if [[ -n "$ERRS" ]]; then
+        log "Error making Droplet: $ERRS"
         exit 6
 fi
 
@@ -101,10 +104,13 @@ trap 'if [[ -z "$MADE_OK" ]]; then
 fi' EXIT
 
 # Grab the Droplet IP address and make sure we don't think we know its SSH key.
-DROPLET_IP=$(jq --null-input --raw-output \
-        '$ENV.DO_JSON | fromjson | .[0].networks.v4[] |
-                select("public" == .type) |
-                .ip_address')
+DROPLET_IP=$(perl -M Data::Dumper -MJSON::PP -e '
+        print ((
+                grep
+                        {"public" eq $_->{type}}
+                        decode_json($ENV{DO_JSON})->[0]->{networks}->{v4}->@*
+                )[0]->{ip_address});
+')
 if [[ -z "$DROPLET_IP" ]]; then
         log "No IP address for Droplet"
         exit 9
