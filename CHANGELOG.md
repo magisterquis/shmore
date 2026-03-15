@@ -1,5 +1,9 @@
 Changelog
 =========
+20260315
+--------
+- Updated DigitalOcean known slugs list.
+
 20250804
 --------
 - `tap_ok` and `tap_todo_skip`: Fail more gracefully with unexpectly
