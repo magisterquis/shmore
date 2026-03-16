@@ -4,12 +4,12 @@
 # Make sure the quickstarts in examples/ and README are the same
 # By J. Stuart McMurray
 # Created 20250309
-# Last Modified 20250309
+# Last Modified 20260315
 
 use warnings;
 use strict;
 
-use ShellTest;
+use ShellTest 'slurp';
 use Test::More;
 
 # Find the quickstart script in the README.

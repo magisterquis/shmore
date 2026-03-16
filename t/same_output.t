@@ -4,9 +4,9 @@
 # Ensure shmore and Test::More produce the same output
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250312
+# Last Modified 20260315
 
-use ShellTest;
+use ShellTest 'test_glob';
 use Test::More;
 
 use warnings;

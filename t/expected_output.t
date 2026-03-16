@@ -4,9 +4,9 @@
 # Ensure we get expected output
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250301
+# Last Modified 20260315
 
-use ShellTest;
+use ShellTest qw/slurp test_glob/;
 use Test::More;
 
 use warnings;

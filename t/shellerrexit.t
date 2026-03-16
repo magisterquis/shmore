@@ -4,12 +4,12 @@
 # Make sure we exit unhappily if the shell would have without us.
 # By J. Stuart McMurray
 # Created 20250219
-# Last Modified 20250308
+# Last Modified 20260315
 
 use warnings;
 use strict;
 
-use ShellTest;
+use ShellTest 'test_glob';
 use Test::More;
 
 use feature 'signatures';

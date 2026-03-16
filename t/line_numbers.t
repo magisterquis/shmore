@@ -4,12 +4,12 @@
 # Make sure the README has the right line numbers
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20250308
+# Last Modified 20260315
 
 use warnings;
 use strict;
 
-use ShellTest;
+use ShellTest 'slurp';
 use Test::More tests => 1;
 
 # Read in the README
