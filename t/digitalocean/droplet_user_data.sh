@@ -35,7 +35,7 @@ chmod 0600 /home/$TESTUSER/.ssh/authorized_keys
 chown -R $TESTUSER:$(id -g $TESTUSER) /home/$TESTUSER/.ssh
 
 # Install shells to test against and test dependencies.
-TOINSTALL="perl rsync"
+TOINSTALL="perl"
 if which apt >/dev/null 2>&1; then # Debianish
         export DEBIAN_FRONTEND=noninteractive
         apt-get -y -qq update
@@ -62,4 +62,4 @@ else
 fi
 
 # Make sure prereqs installed.
-type prove rsync
+type prove

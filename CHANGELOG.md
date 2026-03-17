@@ -7,6 +7,7 @@ Changelog
 - Slightly less error-prone tests on DigitalOcean droplets.
 - Check syntax with shells' `-n`.
 - Be more consistent with echoing.
+- Don't install `rsync` on DigitalOcean droplets.
 
 20250804
 --------

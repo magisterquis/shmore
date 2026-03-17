@@ -2,7 +2,7 @@
 # Make ALL the Droplets
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20260315
+# Last Modified 20260317
 
 # Non-user-configurable varibales
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
@@ -45,7 +45,7 @@ SLUGS        ?= ${DEFAULT_SLUGS}
 TAG          ?= shmore_test
 USER_DATA    ?= ./droplet_user_data.sh
 
-# We'll use a suffix rule to generate .tout files from .rsync files
+# We'll use a suffix rule to generate .tout files from .t files
 .SUFFIXES: .${SSH_SUFFIX} .${TEST_SUFFIX}
 
 # Work out our SSH key
