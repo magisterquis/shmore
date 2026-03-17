@@ -20,16 +20,18 @@ no warnings 'experimental::signatures';
 # all shells use -n, but this is here to prevent adding a shell which doesn't
 # -n in the future but forgetting about this test.
 my %check_flags = (
-        "ash"   => "-n",
-        "bash"  => "-n",
-        "dash"  => "-n",
-        "ksh"   => "-n",
-        "ksh93" => "-n",
-        "mksh"  => "-n",
-        "posh"  => "-n",
-        "sh"    => "-n",
-        "yash"  => "-n",
-        "zsh"   => "-n",
+        "ash"         => "-n",
+        "bash"        => "-n",
+        "busybox ash" => "-n",
+        "busybox sh"  => "-n",
+        "dash"        => "-n",
+        "ksh"         => "-n",
+        "ksh93"       => "-n",
+        "mksh"        => "-n",
+        "posh"        => "-n",
+        "sh"          => "-n",
+        "yash"        => "-n",
+        "zsh"         => "-n",
 );
 
 my @have_shells = grep {have_shell $_} @shells;

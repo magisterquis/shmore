@@ -8,6 +8,7 @@ Changelog
 - Check syntax with shells' `-n`.
 - Be more consistent with echoing.
 - Don't install `rsync` on DigitalOcean droplets.
+- Add BusyBox's ash/sh to the list of supported shells.
 
 20250804
 --------

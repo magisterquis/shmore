@@ -12,6 +12,8 @@ somewhere and source it.
 Tested with
 - `ash` (Which may just be dash, on Debian)
 - [`bash`](https://tiswww.case.edu/php/chet/bash/bashtop.html)
+- [BusyBox's](https://busybox.net) `ash`
+- [BusyBox's](https://busybox.net) `sh`
 - [`dash`](http://gondor.apana.org.au/~herbert/dash/)
 - `ksh` (Implementation varies)
 - [`ksh93`](https://github.com/ksh93/ksh)

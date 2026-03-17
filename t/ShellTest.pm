@@ -4,7 +4,7 @@
 # Run a subtests passing shell names
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20260316
+# Last Modified 20260317
 
 package ShellTest;
 
@@ -22,10 +22,23 @@ no warnings 'experimental::signatures';
 our @EXPORT_OK = qw/have_shell @shells slurp test_glob/;
 
 # Shells under which to test the scripts.
-our @shells = ("ash", "bash", "dash", "ksh", "ksh93", "mksh", "posh", "sh", "yash", "zsh");
+our @shells = (
+        "ash",
+        "bash",
+        "busybox ash",
+        "busybox sh",
+        "dash",
+        "ksh",
+        "ksh93",
+        "mksh",
+        "posh",
+        "sh",
+        "yash",
+        "zsh",
+);
 
 # have_shell returns true if we can execute $shell (which may be any program).
-sub have_shell($shell) { defined can_run($shell); }
+sub have_shell($shell) { defined can_run($shell =~ s/ .*//r); }
 
 # print_shells prints a list of shells we have and don't have.
 sub print_shells {
