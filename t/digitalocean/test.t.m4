@@ -5,7 +5,7 @@ m4_changecom()m4_dnl
 # Script to run tests on m4_name
 # By J. Stuart McMurray
 # Created 20250228
-# Last Modified 20250308
+# Last Modified 20260317
 
 # Generated m4_esyscmd(date +%Y%m%d)m4_dnl
 
@@ -14,7 +14,7 @@ set -euo pipefail
 NDONE=0 # Number of tests finished
 
 # Test plan, which is the number of test scripts we have.
-echo '1..m4_eval(m4_esyscmd(ls ../../t/*.t ../../examples/*.t | wc -l))'
+echo "1..$(($(ls ../../t/*.t ../../examples/*.t | wc -l)))"
 
 ( cd m4_srcdir &&
         tar -cf - \
@@ -33,7 +33,10 @@ echo '1..m4_eval(m4_esyscmd(ls ../../t/*.t ../../examples/*.t | wc -l))'
                 cd m4_remdir &&
                 tar -xf - &&
                 perl -It -MShellTest -e ShellTest::print_shells &&
-                m4_testcmd examples/ t/ ||:
+                {
+                        m4_testcmd examples ||:
+                        m4_testcmd ||:
+                }
         )
 ' 2>&1 |
 tee m4_tout |

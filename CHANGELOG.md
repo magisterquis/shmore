@@ -1,9 +1,10 @@
 Changelog
 =========
-20260315
+20260317
 --------
 - Removed dependency on `jq`.
 - Updated DigitalOcean known slugs list.
+- Slightly less error-prone tests on DigitalOcean droplets.
 
 20250804
 --------
