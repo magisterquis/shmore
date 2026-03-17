@@ -4,7 +4,7 @@
 # Run a subtests passing shell names
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20260315
+# Last Modified 20260316
 
 package ShellTest;
 
@@ -19,7 +19,7 @@ use feature 'signatures';
 no warnings 'experimental::signatures';
 
 # Export things on demand.
-our @EXPORT_OK = qw/slurp test_glob/;
+our @EXPORT_OK = qw/have_shell @shells slurp test_glob/;
 
 # Shells under which to test the scripts.
 our @shells = ("ash", "bash", "dash", "ksh", "ksh93", "mksh", "posh", "sh", "yash", "zsh");

@@ -4,20 +4,20 @@
 # Warn someone if we're missing a shell against which to test
 # By J. Stuart McMurray
 # Created 20250218
-# Last Modified 20250308
+# Last Modified 20260316
 
 use warnings;
 use strict;
 
-use ShellTest;
+use ShellTest qw/have_shell @shells/;
 use Test::More;
 
-plan tests => 0+@ShellTest::shells;
+plan tests => 0+@shells;
 
 # Warn if we're missing a shell
-for my $shell (@ShellTest::shells) {
+for my $shell (@shells) {
         SKIP: {
-                unless (ShellTest::have_shell($shell)) {
+                unless (have_shell($shell)) {
                         skip "Don't have $shell", 1;
                 }
                 pass "Have $shell";
