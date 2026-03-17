@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20250803
+# Last Modified 20260317
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -190,13 +190,19 @@ tap_plan() {
                 echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
+        if ! _tap_isnum  "$1" ; then
+                _tap_echo "Number of tests must be a positive integer. "\
+                        "You gave it '$1'."
+                return $TAP_RETURN_EXPECTED_NUMBER
+        fi
+
         # Don't double-call
         if [ 0 -ne "${_tap_nplan}" ]; then
                 echo "Plan already printed" >&2
                 return $TAP_RETURN_PLAN_ALREADY_PRINTED
         fi
         # Work out how many tests we're signing ourselves up for
-        _tap_nplan=$(($1))
+        _tap_nplan=$1
         _tap_plan_msg="1..${_tap_nplan}"
         if [ 0 -eq ${_tap_nplan} ]; then
                 _tap_skipa=${2:-"???"}

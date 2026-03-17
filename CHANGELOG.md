@@ -5,6 +5,7 @@ Changelog
 - Removed dependency on `jq`.
 - Updated DigitalOcean known slugs list.
 - Slightly less error-prone tests on DigitalOcean droplets.
+- Check syntax with shells' `-n`.
 
 20250804
 --------
