@@ -73,7 +73,7 @@ _tap_like() {
 
         # Make sure we have enough arguments
         if [ 3 -gt $# ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 
@@ -90,7 +90,7 @@ _tap_like() {
         # Make sure our matcher is a matcher
         case "$2" in
                 "=~" | "!~")                                ;; # Ok
-                *) echo "Invalid operator $2" >&2;
+                *) _tap_echo "Invalid operator $2" >&2;
                         return $TAP_RETURN_INVALID_OPERATOR ;; # Not ok
         esac
 
@@ -159,19 +159,19 @@ tap_cmp_ok() {
 
         # Make sure we have enough arguments
         if [ 3 -gt $# ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 
-	# Do the comparing itself.
-	_tap_ok=0
-	test "$1" "$2" "$3" || _tap_ok=$?
-	tap_ok "${_tap_ok}" "${4:-""}" "${5:-""}" "${6:-""}"
+        # Do the comparing itself.
+        _tap_ok=0
+        test "$1" "$2" "$3" || _tap_ok=$?
+        tap_ok "${_tap_ok}" "${4:-""}" "${5:-""}" "${6:-""}"
 
-	# If the test passed, no need to print anything else.
-	if [ 0 -eq ${_tap_ok} ]; then
-		return
-	fi
+        # If the test passed, no need to print anything else.
+        if [ 0 -eq ${_tap_ok} ]; then
+                return
+        fi
 
         # If we're in a TODO state, write to stdout.
         _tap_pf=tap_diag
@@ -179,30 +179,30 @@ tap_cmp_ok() {
                 _tap_pf=tap_note
         fi
 
-	# Report the fail nicely.
-	case $2 in
-		"="|"==") # Strings
-			${_tap_pf} "         got: '$1'"
-			${_tap_pf} "    expected: '$3'"
+        # Report the fail nicely.
+        case $2 in
+                "="|"==") # Strings
+                        ${_tap_pf} "         got: '$1'"
+                        ${_tap_pf} "    expected: '$3'"
                         ;;
                 "-eq")   # Numbers
-			${_tap_pf} "         got: $1"
-			${_tap_pf} "    expected: $3"
-			;;
+                        ${_tap_pf} "         got: $1"
+                        ${_tap_pf} "    expected: $3"
+                        ;;
                 "!=")     # Strings
-			${_tap_pf} "         got: '$1'"
-			${_tap_pf} "    expected: anything else"
-			;;
+                        ${_tap_pf} "         got: '$1'"
+                        ${_tap_pf} "    expected: anything else"
+                        ;;
                 "-ne")    # Numbers
-			${_tap_pf} "         got: $1"
-			${_tap_pf} "    expected: anything else"
-			;;
-		*)
-			${_tap_pf} "    '$1'"
-			${_tap_pf} "        $2"
-			${_tap_pf} "    '$3'"
-			;;
-	esac
+                        ${_tap_pf} "         got: $1"
+                        ${_tap_pf} "    expected: anything else"
+                        ;;
+                *)
+                        ${_tap_pf} "    '$1'"
+                        ${_tap_pf} "        $2"
+                        ${_tap_pf} "    '$3'"
+                        ;;
+        esac
 }
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
@@ -388,7 +388,7 @@ tap_plan() {
 
         # Need a count
         if [ 0 -eq $# ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
         if ! _tap_isnum  "$1" ; then
@@ -399,7 +399,7 @@ tap_plan() {
 
         # Don't double-call
         if [ 0 -ne "${_tap_nplan}" ]; then
-                echo "Plan already printed" >&2
+                _tap_echo "Plan already printed" >&2
                 return $TAP_RETURN_PLAN_ALREADY_PRINTED
         fi
         # Work out how many tests we're signing ourselves up for
@@ -425,7 +425,7 @@ tap_BAIL_OUT() {
         if [ -n "$1" ]; then
                 _tap_bailo="${_tap_bailo}  ${*:-""}"
         fi
-        echo "${_tap_bailo}"
+        /bin/echo "${_tap_bailo}"
         return $TAP_RETURN_BAILED_OUT
 }
 
@@ -467,7 +467,7 @@ tap_todo_skip() {
 _tap_skip() {
         # Need a count and a reason
         if [ 3 -gt $# ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 
@@ -607,7 +607,7 @@ _tap_ok() {
 
         # Need at least an ok or not.
         if [ 1 -gt $# ] || [ -z "$1" ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 

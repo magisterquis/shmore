@@ -187,7 +187,7 @@ tap_plan() {
 
         # Need a count
         if [ 0 -eq $# ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
         if ! _tap_isnum  "$1" ; then
@@ -198,7 +198,7 @@ tap_plan() {
 
         # Don't double-call
         if [ 0 -ne "${_tap_nplan}" ]; then
-                echo "Plan already printed" >&2
+                _tap_echo "Plan already printed" >&2
                 return $TAP_RETURN_PLAN_ALREADY_PRINTED
         fi
         # Work out how many tests we're signing ourselves up for

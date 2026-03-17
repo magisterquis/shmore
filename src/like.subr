@@ -2,7 +2,7 @@
 # Regex comparisons (with perl)
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250729
+# Last Modified 20260317
 
 # tap_like tests whether something we got matches a regex.  This uses Perl
 # under the hood.
@@ -37,7 +37,7 @@ _tap_like() {
 
         # Make sure we have enough arguments
         if [ 3 -gt $# ]; then
-                echo "Not enough arguments" >&2
+                _tap_echo "Not enough arguments" >&2
                 return $TAP_RETURN_NOT_ENOUGH_ARGUMENTS
         fi
 
@@ -54,7 +54,7 @@ _tap_like() {
         # Make sure our matcher is a matcher
         case "$2" in
                 "=~" | "!~")                                ;; # Ok
-                *) echo "Invalid operator $2" >&2;
+                *) _tap_echo "Invalid operator $2" >&2;
                         return $TAP_RETURN_INVALID_OPERATOR ;; # Not ok
         esac
 

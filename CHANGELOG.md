@@ -6,6 +6,7 @@ Changelog
 - Updated DigitalOcean known slugs list.
 - Slightly less error-prone tests on DigitalOcean droplets.
 - Check syntax with shells' `-n`.
+- Be more consistent with echoing.
 
 20250804
 --------
