@@ -5,7 +5,7 @@ m4_changecom()m4_dnl
 # Script to run tests on m4_name
 # By J. Stuart McMurray
 # Created 20250228
-# Last Modified 20260317
+# Last Modified 20260318
 
 # Generated m4_esyscmd(date +%Y%m%d)m4_dnl
 
@@ -50,7 +50,7 @@ while read TNAME REST; do
 
         # Update with this status.
         : $((NDONE++))
-        if [[ "$REST" == *\ ok ]]; then
+        if [[ "$REST" == *\ ok ]] || [[ "$REST" == *\ skipped:* ]]; then
                 echo "ok $NDONE - $TNAME"
         else
                 echo "not ok $NDONE - $TNAME"

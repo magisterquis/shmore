@@ -2,7 +2,7 @@
 # Test plan
 # By J. Stuart McMurray
 # Created 20241105
-# Last Modified 20260317
+# Last Modified 20260318
 
 # TAP_TODO, if set, notes that tests are expected to fail.  Output will include
 # a flag indicating the tests are TODO for test harness bookkeeping.
@@ -21,7 +21,6 @@ TAP_RETURN_MAX_FAIL=240
 TAP_RETURN_INVALID_OPERATOR=241
 TAP_RETURN_NOT_ENOUGH_ARGUMENTS=242
 TAP_RETURN_PLAN_ALREADY_PRINTED=243
-TAP_RETURN_WRONG_TEST_COUNT=244
 TAP_RETURN_NO_SUBTESTS_RUN=245
 TAP_RETURN_SKIPPED_ALL=246
 TAP_RETURN_EXPECTED_NUMBER=247
@@ -86,7 +85,7 @@ tap_done_testing() {
 
         # Idempotency
         if [ -n "${_tap_doner}" ]; then
-                return ${_tap_doner}
+                return "${_tap_doner}"
         fi
 
         # Default exit status is the number of failed tests, capped at 250.
@@ -118,7 +117,7 @@ done_testing() expects ${_tap_ntest}" "$0"
                 return
         fi
 
-        return ${_tap_doner}
+        return "${_tap_doner}"
 }
 if [ -z "$TAP_NOTRAP" ]; then
         # Apparently zsh doesn't use the last exit status as its exit status
@@ -143,10 +142,10 @@ _tap_finalize() {
         fi
         # Note if we didn't run enough tests.
         _tap_qualifier=
-        if [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
+        if [ "${_tap_nplan}" -ne ${_tap_ntest} ]; then
                 _tap_qualifier=" run"
                 _tap_s=
-                if [ 1 -ne ${_tap_nplan} ]; then
+                if [ 1 -ne "${_tap_nplan}" ]; then
                         _tap_s=s
                 fi
                 tap_diag "Looks like you planned ${_tap_nplan} test${_tap_s} \
@@ -166,7 +165,7 @@ of ${_tap_ntest}${_tap_qualifier}." >&2
         _tap_final=0
         if [ 0 -ne ${_tap_nfail} ]; then
                 _tap_final=${_tap_nfail}
-        elif [ ${_tap_nplan} -ne ${_tap_ntest} ]; then
+        elif [ "${_tap_nplan}" -ne ${_tap_ntest} ]; then
                 _tap_final=1
         fi
         return ${_tap_final}
@@ -204,7 +203,7 @@ tap_plan() {
         # Work out how many tests we're signing ourselves up for
         _tap_nplan=$1
         _tap_plan_msg="1..${_tap_nplan}"
-        if [ 0 -eq ${_tap_nplan} ]; then
+        if [ 0 -eq "${_tap_nplan}" ]; then
                 _tap_skipa=${2:-"???"}
                 _tap_plan_msg="${_tap_plan_msg} # SKIP ${_tap_skipa}"
         fi

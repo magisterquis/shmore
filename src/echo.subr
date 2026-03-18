@@ -2,7 +2,7 @@
 # Print helpful messages
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20250513
+# Last Modified 20260318
 
 # _tap_echo is like echo, but prepends ${_tap_space} to the message, for
 # easier subtests.
@@ -23,7 +23,7 @@ tap_note() {(
         # Print each line.
         (
                 _tap_lines="$*"
-                while ! [ -z "$_tap_lines" ]; do
+                while [ -n "$_tap_lines" ]; do
                         # Hokey, but it works
                         _tap_echo "# ${_tap_lines%%
 *}"

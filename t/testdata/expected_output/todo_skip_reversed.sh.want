@@ -1,6 +1,6 @@
-Repetition count '2' isn't numeric
+Repetition count 'A reason in the wrong place' isn't numeric
 # Subtest: A Subtest
-    Repetition count '2' isn't numeric
+    Repetition count 'A reason in the wrong place' isn't numeric
     not ok 1 # TODO & SKIP A reason in the correct place
     not ok 2 # TODO & SKIP A reason in the correct place
     1..2

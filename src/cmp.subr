@@ -2,7 +2,7 @@
 # Inexact comparisons
 # By J. Stuart McMurray
 # Created 20241109
-# Last Modified 20260317
+# Last Modified 20260318
 
 # tap_is notes whether something we got was expected.  These will be compared
 # with [ ... = ... ].
@@ -50,8 +50,11 @@ tap_cmp_ok() {
         fi
 
         # Do the comparing itself.
-        _tap_ok=0
-        test "$1" "$2" "$3" || _tap_ok=$?
+        if test "$1" "$2" "$3"; then
+                _tap_ok=0
+        else
+                _tap_ok=1
+        fi
         tap_ok "${_tap_ok}" "${4:-""}" "${5:-""}" "${6:-""}"
 
         # If the test passed, no need to print anything else.

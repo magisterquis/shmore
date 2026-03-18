@@ -1,6 +1,6 @@
 Changelog
 =========
-20260317
+20260318
 --------
 - Removed dependency on `jq`.
 - Updated DigitalOcean known slugs list.
@@ -9,6 +9,7 @@ Changelog
 - Be more consistent with echoing.
 - Don't install `rsync` on DigitalOcean droplets.
 - Add BusyBox's ash/sh to the list of supported shells.
+- Check code with ShellCheck.
 
 20250804
 --------
