@@ -40,6 +40,10 @@ tap_note() {(
         )
 )}
 
+# SHMORE_VERSION is the version of shmore we're using.
+# shellcheck disable=SC2034 # Used by users of the library.
+SHMORE_VERSION=v1.0.0
+
 # tap_like tests whether something we got matches a regex.  This uses Perl
 # under the hood.
 #
@@ -109,10 +113,6 @@ _tap_like() {
                 tap_diag "          matches '${_tap_rex}'"
         fi
 }
-
-# SHMORE_VERSION is the version of shmore we're using.
-# shellcheck disable=SC2034 # Used by users of the library.
-SHMORE_VERSION=devel
 
 # _tap_must_number tests if $1 is a number.
 #

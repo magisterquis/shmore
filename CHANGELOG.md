@@ -1,8 +1,10 @@
 Changelog
 =========
-20260401
---------
+v1.0.0 - 20260401
+-----------------
 - Add `SHMORE_VERSION`.
+- Use version numbers.
+- Release v1.0.0!
 
 20260318
 --------
