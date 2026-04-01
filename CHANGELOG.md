@@ -1,5 +1,9 @@
 Changelog
 =========
+20260401
+--------
+- Add `SHMORE_VERSION`.
+
 20260318
 --------
 - Removed dependency on `jq`.

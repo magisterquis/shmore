@@ -1,0 +1,11 @@
+# version.subr
+# Current shmore version in a variable
+# By J. Stuart McMurray
+# Created 20260328
+# Last Modified 20260328
+
+# SHMORE_VERSION is the version of shmore we're using.
+# shellcheck disable=SC2034 # Used by users of the library.
+SHMORE_VERSION=devel
+
+# vim: ft=sh

@@ -133,10 +133,11 @@ tap_ok $? "A thing worked" "$0" $LINENO
 ### Variables
 In addition, two variables are provided
 
-Name                                | Description
-------------------------------------|------------
-[`TAP_TODO`](./src/plan.subr#L12)   | When set, notes that tests are expected to fail
-[`TAP_NOTRAP`](./src/plan.subr#L17) | When set before sourcing [`shmore.subr`](./shmore.subr), prevents `tap_done_testing` from being set as the `EXIT` trap.
+Name                                      | Description
+------------------------------------------|------------
+[`SHMORE_VERSION`](./src/version.subr#L9) | Shmore version, or `devel` if not a release
+[`TAP_TODO`](./src/plan.subr#L12)         | When set, notes that tests are expected to fail
+[`TAP_NOTRAP`](./src/plan.subr#L17)       | When set before sourcing [`shmore.subr`](./shmore.subr), prevents `tap_done_testing` from being set as the `EXIT` trap.
 
 
 Code Changes

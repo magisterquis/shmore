@@ -4,7 +4,7 @@
 # Make sure the README has the right line numbers
 # By J. Stuart McMurray
 # Created 20241126
-# Last Modified 20260315
+# Last Modified 20260401
 
 use warnings;
 use strict;
@@ -21,7 +21,7 @@ my @readme = split /\n/, $readme;
 my %readme_lns;
 for (@readme) {
         next unless
-                /^\[`((?:tap|TAP)_[_[:alpha:]]+)`\]\((\.\/src\/[a-z]+\.subr#L\d+)\)/;
+                /^\[`((?:SHMORE|tap|TAP)_[_[:alpha:]]+)`\]\((\.\/src\/[a-z]+\.subr#L\d+)\)/;
         my $fn = $1;
         my @fl = split /#L/, $2;
         $readme_lns{$fn} = {
@@ -35,7 +35,9 @@ my %file_lns;
 while (my $f = <"./src/*.subr">) {
         open my $H, "<", $f or die "open $f: $!";
         while (<$H>) {
-                next unless /^(tap_[_[:alpha:]]+)\(\)/ or
+                next unless
+                        /^(SHMORE_[A-Z]+)=/ or
+                        /^(tap_[_[:alpha:]]+)\(\)/ or
                         /^(TAP_[A-Z]+)=\$\{\g{1}:-""\}/;
                 # Make sure we don't have dupes
                 if (exists $file_lns{$1}) {

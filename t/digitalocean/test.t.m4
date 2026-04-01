@@ -5,7 +5,7 @@ m4_changecom()m4_dnl
 # Script to run tests on m4_name
 # By J. Stuart McMurray
 # Created 20250228
-# Last Modified 20260318
+# Last Modified 20260401
 
 # Generated m4_esyscmd(date +%Y%m%d)m4_dnl
 
@@ -19,8 +19,6 @@ echo "1..$(($(ls ../../t/*.t ../../examples/*.t | wc -l)))"
 ( cd m4_srcdir &&
         tar -cf - \
                 -s '/.*\.sw.$//' \
-                -s '/^\.\/\.git$//' \
-                -s '/^\.\/\.git\/.*//' \
                 -s '/^\.\/t\/digitalocean$//' \
                 -s '/^\.\/t\/digitalocean\/.*//' \
                 .
