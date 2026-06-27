@@ -3,6 +3,8 @@ Changelog
 v1.0.1 - 20260627
 -----------------
 - Updated DigitalOcean slugs lists.
+- Readme now recommends looking at [`curlrevshell`'s tests](
+  https://github.com/magisterquis/curlrevshell/t) for IRL usage.
 
 v1.0.0 - 20260401
 -----------------

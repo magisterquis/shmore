@@ -27,8 +27,8 @@ on OpenBSD, macOS, and most of
 [DigitalOcean's Linux distros](https://docs.digitalocean.com/products/droplets/details/images/).
 It should work elsewhere as well.
 
-Examples are in [`./examples`](./examples), and have a look at [`wtrtdtmlb`'s
-tests](https://github.com/magisterquis/wtrtdtmlb/tree/master/src/containers/jankins/t)
+Examples are in [`./examples`](./examples), and have a look at
+[`curlrevshell`'s tests](https://github.com/magisterquis/curlrevshell/t)
 for IRL usage.
 
 Example
