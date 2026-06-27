@@ -1,5 +1,9 @@
 Changelog
 =========
+v1.0.1 - 20260627
+-----------------
+- Updated DigitalOcean slugs lists.
+
 v1.0.0 - 20260401
 -----------------
 - Add `SHMORE_VERSION`.

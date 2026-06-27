@@ -2,24 +2,24 @@
 # Make ALL the Droplets
 # By J. Stuart McMurray
 # Created 20250225
-# Last Modified 20260317
+# Last Modified 20260627
 
 # Non-user-configurable varibales
 CURRENT_SLUGS       !!= doctl compute image list-distribution\
 			--format Slug --no-header | sort -u
-BROKEN_SLUGS          = almalinux-8-x64 fedora-43-x64
+BROKEN_SLUGS          = almalinux-8-x64 fedora-43-x64 rockylinux-8-x64
 DEFAULT_SLUGS         = almalinux-10-x64 almalinux-9-x64\
 			centos-stream-10-x64 centos-stream-9-x64\
-			debian-12-x64 debian-13-x64\
-			fedora-42-x64\
-			rockylinux-10-x64 rockylinux-8-x64 rockylinux-9-x64\
-			ubuntu-22-04-x64 ubuntu-24-04-x64 ubuntu-25-04-x64
+			debian-13-x64\
+			fedora-44-x64\
+			rockylinux-10-x64 rockylinux-9-x64\
+			ubuntu-22-04-x64 ubuntu-24-04-x64 ubuntu-25-10-x64
 DEFAULT_SSH_KEYS      = ${HOME}/.ssh_id_rsa ${HOME}/.ssh/id_ed25519\
 			${HOME}/.ssh/id_ed25519_shmore
 KNOWN_SLUGS           = almalinux-10-x64 almalinux-8-x64 almalinux-9-x64\
 			centos-stream-10-x64 centos-stream-9-x64\
-			debian-12-x64 debian-13-x64\
-			fedora-42-x64 fedora-43-x64\
+			debian-13-x64\
+			fedora-43-x64 fedora-44-x64\
 			gpu-amd-base gpu-h100x1-base gpu-h100x8-base\
 			rockylinux-10-x64 rockylinux-8-x64 rockylinux-9-x64\
 			ubuntu-22-04-x64 ubuntu-24-04-x64 ubuntu-25-10-x64
