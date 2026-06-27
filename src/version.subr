@@ -6,6 +6,6 @@
 
 # SHMORE_VERSION is the version of shmore we're using.
 # shellcheck disable=SC2034 # Used by users of the library.
-SHMORE_VERSION=v1.0.0
+SHMORE_VERSION=v1.0.1
 
 # vim: ft=sh

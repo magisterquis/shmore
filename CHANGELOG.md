@@ -6,6 +6,7 @@ v1.0.1 - 20260627
 - Readme now recommends looking at [`curlrevshell`'s tests](
   https://github.com/magisterquis/curlrevshell/t) for IRL usage.
 - `SHMORE_VERSION` test no longer pretends to know how git works.
+- First point release.
 
 v1.0.0 - 20260401
 -----------------
